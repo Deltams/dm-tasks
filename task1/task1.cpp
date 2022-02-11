@@ -2,7 +2,7 @@
 
 using namespace std;
 
-long long my_pow(long long a, long long p){ // Áûñòðîå âîçâåäåíèå â ñòåïåíü
+long long my_pow(long long a, long long p){ // Быстрое возведение в степень
     if (p == 0){
         return 1;
     }
@@ -12,7 +12,7 @@ long long my_pow(long long a, long long p){ // Áûñòðîå âîçâåäåíè
     return a * my_pow(a, p-1);
 }
 
-vector<int> vec_pp(vector<int> v){ // Ïðèáàâëåíèå â êîíåö âåêòîðà 1
+vector<int> vec_pp(vector<int> v){ // Прибавление в конец вектора 1
     int tmp = 0;
     if (v[v.size()-1] == 1){
         tmp = 1;
@@ -34,7 +34,7 @@ vector<int> vec_pp(vector<int> v){ // Ïðèáàâëåíèå â êîíåö âå�
     return v;
 }
 
-vector<vector<int>> all_vectors(long long n){ // Ôóíêöèÿ êîòîðàÿ ñîçäàåò âñå âåêòîðà îí n
+vector<vector<int>> all_vectors(long long n){ // Функция которая создает все вектора он n
     vector<vector<int>> v;
     long long tmp = my_pow(2, n);
     v.resize(my_pow(2, tmp));
@@ -52,7 +52,7 @@ vector<vector<int>> all_vectors(long long n){ // Ôóíêöèÿ êîòîðàÿ �
     return v;
 }
 
-void print_result(vector<vector<int>> v){ // Âûâîä âñåõ âåêòîðîâ
+void print_result(vector<vector<int>> v){ // Вывод всех векторов
     for (auto q : v){
         for (auto to : q){
             cout << to << " ";
@@ -66,7 +66,7 @@ int main(){
 
     long long n;
 
-    cout << "Ââåäèòå ÷èñëî n: ";
+    cout << "Введите число n: ";
 
     cin >> n;
     
