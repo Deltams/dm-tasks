@@ -2,7 +2,7 @@
 
 using namespace std;
 
-long long my_pow(long long a, long long p){ // Быстрое возведение в степень
+long long my_pow(long long a, long long p){ // Р‘С‹СЃС‚СЂРѕРµ РІРѕР·РІРµРґРµРЅРёРµ РІ СЃС‚РµРїРµРЅСЊ
     if (p == 0){
         return 1;
     }
@@ -12,7 +12,7 @@ long long my_pow(long long a, long long p){ // Быстрое возведение в степень
     return a * my_pow(a, p-1);
 }
 
-int degree_two(long long n){ // В какую степень 2 возведено число
+int degree_two(long long n){ // Р’ РєР°РєСѓСЋ СЃС‚РµРїРµРЅСЊ 2 РІРѕР·РІРµРґРµРЅРѕ С‡РёСЃР»Рѕ
     int t = 1, ans = 0;
     while (t != n){
         t *= 2;
@@ -21,9 +21,9 @@ int degree_two(long long n){ // В какую степень 2 возведено число
     return ans;
 }
 
-vector<int> residual(vector<int> &v, int k, int n){ // Определение остаточной по вектору
+vector<int> residual(vector<int> &v, int k, int n){ // РћРїСЂРµРґРµР»РµРЅРёРµ РѕСЃС‚Р°С‚РѕС‡РЅРѕР№ РїРѕ РІРµРєС‚РѕСЂСѓ
     vector<int> ans;
-    long long tmp = v.size() / my_pow(2, n); // Размер коробочки для прохода по вектору и шаг прохода по вектору
+    long long tmp = v.size() / my_pow(2, n); // Р Р°Р·РјРµСЂ РєРѕСЂРѕР±РѕС‡РєРё РґР»СЏ РїСЂРѕС…РѕРґР° РїРѕ РІРµРєС‚РѕСЂСѓ Рё С€Р°Рі РїСЂРѕС…РѕРґР° РїРѕ РІРµРєС‚РѕСЂСѓ
     int i = 0;
     if (k == 1){
         i = tmp;
@@ -42,15 +42,15 @@ int main(){
     string s;
     int n, k;
 
-    cout << "Введите вектор функции: ";
+    cout << "Р’РІРµРґРёС‚Рµ РІРµРєС‚РѕСЂ С„СѓРЅРєС†РёРё: ";
 
     cin >> s;
 
-    cout << "Введите какая остаточнуя интересует: ";
+    cout << "Р’РІРµРґРёС‚Рµ РєР°РєР°СЏ РѕСЃС‚Р°С‚РѕС‡РЅСѓСЏ РёРЅС‚РµСЂРµСЃСѓРµС‚: ";
 
     cin >> k;
 
-    cout << "Введите номер аргумента(1 - " << degree_two(s.size()) <<"): ";
+    cout << "Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ Р°СЂРіСѓРјРµРЅС‚Р°(1 - " << degree_two(s.size()) <<"): ";
 
     cin >> n;
 
