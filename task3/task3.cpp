@@ -2,7 +2,7 @@
 
 using namespace std;
 
-long long my_pow(long long a, long long p){ // Быстрое возведение в степень
+long long my_pow(long long a, long long p){ // Р‘С‹СЃС‚СЂРѕРµ РІРѕР·РІРµРґРµРЅРёРµ РІ СЃС‚РµРїРµРЅСЊ
     if (p == 0){
         return 1;
     }
@@ -12,7 +12,7 @@ long long my_pow(long long a, long long p){ // Быстрое возведение в степень
     return a * my_pow(a, p-1);
 }
 
-int degree_two(long long n){ // В какую степень 2 возведено число
+int degree_two(long long n){ // Р’ РєР°РєСѓСЋ СЃС‚РµРїРµРЅСЊ 2 РІРѕР·РІРµРґРµРЅРѕ С‡РёСЃР»Рѕ
     int t = 1, ans = 0;
     while (t != n){
         t *= 2;
@@ -21,7 +21,7 @@ int degree_two(long long n){ // В какую степень 2 возведено число
     return ans;
 }
 
-vector<int> cal_func_by_res(vector<int> v1, vector<int> v2, int n){ // Востановление функции по остаточным
+vector<int> cal_func_by_res(vector<int> v1, vector<int> v2, int n){ // Р’РѕСЃС‚Р°РЅРѕРІР»РµРЅРёРµ С„СѓРЅРєС†РёРё РїРѕ РѕСЃС‚Р°С‚РѕС‡РЅС‹Рј
     vector<int> ans;
     int tmp = v1.size()*2 / my_pow(2, n);
     for (int i = 0; i < v1.size(); i = i + tmp){
@@ -41,15 +41,15 @@ int main(){
     string s1, s2;
     int n;
 
-    cout << "Введите нулевую остаточную: ";
+    cout << "Р’РІРµРґРёС‚Рµ РЅСѓР»РµРІСѓСЋ РѕСЃС‚Р°С‚РѕС‡РЅСѓСЋ: ";
 
     cin >> s1;
 
-    cout << "Введите единичную остаточную: ";
+    cout << "Р’РІРµРґРёС‚Рµ РµРґРёРЅРёС‡РЅСѓСЋ РѕСЃС‚Р°С‚РѕС‡РЅСѓСЋ: ";
 
     cin >> s2;
 
-    cout << "Введите номер аргумента(1 - " << degree_two(s1.size()*2) <<"): ";
+    cout << "Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ Р°СЂРіСѓРјРµРЅС‚Р°(1 - " << degree_two(s1.size()*2) <<"): ";
 
     cin >> n;
 
