@@ -54,22 +54,31 @@ vector<vector<int>> all_vectors(long long n){ // Функция которая �
     return v;
 }
 
-string help(){
-    string ans;
-    ans = "1) Константа нуля\n2) Конъюкция\n3) Запрет по X_2\n4) Переменная X_1\n";
-    ans += "5) Запрет по X_1\n6) Переменная X_2\n7) Сложение по модулю 2(xor)\n";
-    ans += "8) Дизъюнкция\n9) Стрелка Пирса\n10) Эквивалентность\n11) Отрицание X_2\n";
-    ans += "12) Импликация от X_2 к X_1\n13) Отрицание X_1\n14) Импликация от X_1 к X_2\n";
-    ans += "15) Штрих Шеффера\n16) Константа единицы\nЕсли устали играть, введите слово stop\n";
+string help(vector<pair<int, string>> &vp){
+    string ans = "";
+
+    for (int i = 1; i <= 16; i++){
+        ans += to_string(i) + ") " + vp[i-1].second + "\n";
+    }
+    ans += "Если устали играть, введите слово stop\n";
     return ans;
 }
 
-string str_vector(vector<int> v){
+string str_vector(vector<int> &v){
     string ans;
     for (int i = 0; i < v.size(); i++){
         ans = ans + (char)(v[i] + (int)'0');
     }
     return ans;
+}
+
+void shuffle(vector<pair<int, string>> &vp){
+    int tmp = vp.size();
+    for (int i = 0; i < tmp; i++){
+        int id = rand()%tmp;
+        swap(vp[i].first, vp[id].first);
+        swap(vp[i].second, vp[id].second);
+    }
 }
 
 int main(){
@@ -97,15 +106,22 @@ int main(){
     table_p[15] = "Штрих Шеффера";
     table_p[16] = "Константа единицы";
 
+    vector<pair<int, string>> vp(table_p.size());
+
+    for (int i = 0; i < table_p.size(); i++){
+        vp[i] = {i+1, table_p[i+1]};
+    }
     cout << "Чтоб начать игру нажмите Enter: ";
     string ts;
 
     getline(cin, ts);
 
+    cout << "\n";
     do{
         bool stop = false;
         int vec = 1 + rand() % 16;
-        cout << "Выберите имя для функции: " << str_vector(mp[vec]) << "\n" << help();
+        shuffle(vp);
+        cout << "Выберите имя для функции: " << str_vector(mp[vec]) << "\n" << help(vp);
         int t = 3; // КОЛ-ВО ПОПЫТОК
         do{
             if (t == 0){
@@ -140,7 +156,7 @@ int main(){
                 cout << "Вы ввели НИЧЕГО!\n";
                 t--;
             } else if (plaer.size() == 1 && '0' <= plaer[0] <= '9'){
-                if (vec == (int)(plaer[0] - '0')){
+                if (vec == vp[(int)(plaer[0] - '0')-1].first){
                     cout << "Это правильный вариант, молодец!\n\n";
                     _sleep(500);
                     break;
@@ -149,7 +165,7 @@ int main(){
                     t--;
                 }
             } else if (plaer.size() == 2 && '0' <= plaer[0] <= '9' && '0' <= plaer[1] <= '9'){
-                if (vec == (int)(plaer[0] - '0') * 10 + (int)(plaer[1] - '0')){
+                if (vec == vp[(int)(plaer[0] - '0') * 10 + (int)(plaer[1] - '0')-1].first){
                     cout << "Это правильный вариант, молодец!\n\n";
                     _sleep(500);
                     break;
