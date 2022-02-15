@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int degree_two(long long n){ // В какую степень 2 возведено число
+int degree_two(long long n){ // Р’ РєР°РєСѓСЋ СЃС‚РµРїРµРЅСЊ 2 РІРѕР·РІРµРґРµРЅРѕ С‡РёСЃР»Рѕ
     int t = 1, ans = 0;
     while (t != n){
         t *= 2;
@@ -11,7 +11,7 @@ int degree_two(long long n){ // В какую степень 2 возведено число
     return ans;
 }
 
-bool str_prov(string &s){ // Проверка на то, что вектор введен правильно
+bool str_prov(string &s){ // РџСЂРѕРІРµСЂРєР° РЅР° С‚Рѕ, С‡С‚Рѕ РІРµРєС‚РѕСЂ РІРІРµРґРµРЅ РїСЂР°РІРёР»СЊРЅРѕ
     int chek_size = 0;
     for (int i = 0; i < s.size(); i++){
         if ('0' <= s[i] && s[i] <= '1'){
@@ -31,7 +31,7 @@ bool str_prov(string &s){ // Проверка на то, что вектор введен правильно
     return false;
 }
 
-void string_standard(string &s){ // Приведение строки к стандарту
+void string_standard(string &s){ // РџСЂРёРІРµРґРµРЅРёРµ СЃС‚СЂРѕРєРё Рє СЃС‚Р°РЅРґР°СЂС‚Сѓ
     string tmp = "";
     for (int i = 0; i < s.size(); i++){
         if (s[i] == ' '){
@@ -42,7 +42,7 @@ void string_standard(string &s){ // Приведение строки к стандарту
     s = tmp;
 }
 
-vector<int> vec_pp(vector<int> v){ // Прибавление в конец вектора 1
+vector<int> vec_pp(vector<int> v){ // РџСЂРёР±Р°РІР»РµРЅРёРµ РІ РєРѕРЅРµС† РІРµРєС‚РѕСЂР° 1
     int tmp = 0;
     if (v[v.size()-1] == 1){
         tmp = 1;
@@ -64,7 +64,7 @@ vector<int> vec_pp(vector<int> v){ // Прибавление в конец вектора 1
     return v;
 }
 
-string sknf(vector<int> v){ // Нахождение СКНФ - отрицание; * Конъюнкция; + дизъюнкция
+string sknf(vector<int> v){ // РќР°С…РѕР¶РґРµРЅРёРµ РЎРљРќР¤ - РѕС‚СЂРёС†Р°РЅРёРµ; * РљРѕРЅСЉСЋРЅРєС†РёСЏ; + РґРёР·СЉСЋРЅРєС†РёСЏ
     string ans = "";
     int chek = 0;
     for (int i = 0; i < v.size(); i++){
@@ -115,7 +115,7 @@ int main(){
     string s;
 
     do{
-        cout << "Введите вектор: ";
+        cout << "Р’РІРµРґРёС‚Рµ РІРµРєС‚РѕСЂ: ";
 
         getline(cin, s);
 
@@ -124,7 +124,7 @@ int main(){
         if (str_prov(s)){
             break;
         } else {
-            cout << "\nВектор введен неверно!\nПример ввода: 01100110\n\n";
+            cout << "\nР’РµРєС‚РѕСЂ РІРІРµРґРµРЅ РЅРµРІРµСЂРЅРѕ!\nРџСЂРёРјРµСЂ РІРІРѕРґР°: 01100110\n\n";
         }
     }while(true);
 
@@ -134,7 +134,7 @@ int main(){
         v[i] = s[i] - '0';
     }
 
-    cout << "\nСКНФ: " << sknf(v);
+    cout << "\nРЎРљРќР¤: " << sknf(v);
 
     return 0;
 }
