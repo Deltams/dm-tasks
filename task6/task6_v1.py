@@ -48,7 +48,7 @@ def dnf_check(player_string, vec):
         return False
     
     for char in player_string: # Проверка на допустимые символы
-        if char == '*' or char == '+' or char == 'v' \
+        if char == '*' or char == 'v' \
         or char == '&' or 'x' == char \
         or char == '(' or char == ')' \
         or char == '-' or '1' <= char <= '9':
@@ -128,8 +128,8 @@ def dnf_true(player_string):
     
     
 
-#random_vector(4)
-vec = '0001101100111101'
+#random_vector(3)
+vec = '11011001'
 print("Напишите ДНФ для вектора: " + vec)
 player_string = input('Введите ДНФ: ')
 
