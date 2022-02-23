@@ -1,0 +1,6 @@
+(-x1*-y1&z1)v(-x1y1-z1)V(-x1y1z1)v(x1-y1-z1)v(x1-y1z1)v(x1y1-z1)
+(-x*-y&z)v(-xy-z)V(-xyz)v(x-y-z)v(x-yz)v(xy-z)
+-x*-y&zv-xy-zV-xyzvx-y-zvx-yzvxy-z
+-x*-y&z v -xy-z V -xyz v x-y-z v x-yz v xy-z
+-x1*-y1&z1v-x1y1-z1V-x1y1z1vx1-y1-z1vx1-y1z1vx1y1-z1
+-x1*-y1&z1 v -x1y1-z1 V -x1y1z1 v x1-y1-z1 v x1-y1z1 v x1y1-z1
