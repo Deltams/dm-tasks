@@ -47,6 +47,12 @@ def dnf_check(player_string, vec):
     if player_string[-1] != ')' and '1' > player_string[-1] > '9':
         return False
     
+    # Проверяет переменные, чтоб они не превышали допустимые значения 
+    for char in player_string: 
+        if '1' <= char <= '9':
+            if char > str(what_degree_two(len(vec))):
+                return False
+    
     for char in player_string: # Проверка на допустимые символы
         if char == '*' or char == 'v' \
         or char == '&' or 'x' == char \
@@ -119,7 +125,8 @@ def dnf_true(player_string):
                     tmpp *= int(t[int(j)-1])
                 zn = 1
             vec_mass[tm] += str(tmpp)
-            
+    print(vec_mass)
+    
     for string in range(len(vec_mass)):
         for j in range(len(vec_mass[string])):
             if vec_mass[string][j] == '1':
