@@ -1,0 +1,4 @@
+(x1 v x2)*(x3 v -x4)
+x1 v x2x3 v -x4
+x1vx2x3v-x4
+(x1v-x2vx3)*(-x1vx2v-x3)&(-x1v-x2vx3)
