@@ -55,6 +55,9 @@ while True:
             player_string = input(f"Введите номер аргумента(1 - {tmp}): ")
             player_string = player_string.replace(' ', '').lower()
             check = False
+            if len(player_string) != 1:
+                print('Номер аргумента введен неверно!')
+                continue
             for char in player_string:
                 if '1' <= char <= str(tmp):
                     continue
@@ -68,4 +71,3 @@ while True:
         print(f"Ответ: {residual(vec, k, n)}")
         break
     print('Вектор введен с ошибками!')
-
