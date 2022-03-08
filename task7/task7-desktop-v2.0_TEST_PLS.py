@@ -14,6 +14,8 @@ d = {
     'u': 'x4',
 }
 
+n_param = tk.IntVar(value=3)
+
 
 def random_vector(vars_count):
     global vec
@@ -22,21 +24,25 @@ def random_vector(vars_count):
     tmp = int(random.random() * (10 ** len(str(count_all_vectors)))) % count_all_vectors
     vec = str(bin(tmp)[2:])
     vec = "0" * (len_vector - len(vec)) + vec
-    return vec
+    ans = ''
+    for i in range(1, len(vec) + 1):
+        ans += vec[i - 1]
+        if i % 4 == 0:
+            ans += ' '
+    return ans
 
 
 def string_standard(player_string):
     player_string = player_string.replace(' ', '').lower()
-    player_string = player_string.replace('x1', 'x')
-    player_string = player_string.replace('x', 'x1')
-    player_string = player_string.replace('y', 'x2')
-    player_string = player_string.replace('z', 'x3')
+    # player_string = player_string.replace('x1', 'x')
+    # player_string = player_string.replace('x', 'x1')
+    # player_string = player_string.replace('y', 'x2')
+    # player_string = player_string.replace('z', 'x3')
     player_string = player_string.replace('&', '')
     player_string = player_string.replace('*', '')
     player_string = player_string.replace('(', '')
     player_string = player_string.replace(')', '')
     player_string = player_string.replace('x', '')
-    print(player_string)
     ans = []
     tmp = 1
     string = ''
@@ -181,14 +187,18 @@ def knf_true(player_string):
 
 def send_answer():
     player_string = entry.get()
-    vec = vector_label.cget('text')
+    vec = ''
+    tmp = vector_label.cget('text').split()
+    for i in range(0, len(tmp)):
+        vec += tmp[i]
     if knf_check(player_string, vec):
         ans_vec = knf_true(player_string)
         if vec == ans_vec:
             error_label.configure(text='Введеная КНФ верная', fg='green')
         else:
             error_label.configure(text='Введеная КНФ неверная!', fg='red')
-
+    elif len(player_string.replace(' ', '')) == 0 and vec.count('1') == len(vec):
+        error_label.configure(text='Введеная КНФ верная', fg='green')
     else:
         error_label.configure(text='Неверный ввод!!!', fg='red')
 
@@ -203,19 +213,25 @@ def go_next():
     entry.delete(0, 'end')
     go_next_button.pack_forget()
     error_label.configure(text='')
-    vector_label.configure(text=random_vector(3))
+    vector_label.configure(text=random_vector(n_param.get()))
 
 
-# # random_vector(3)
-# vec = '11011001'
-# print("Напишите КНФ для вектора: ")
-# player_string = input('Введите КНФ: ')
+def draw_menu():
+    menu_bar = tk.Menu(root)
+    file_menu = tk.Menu(menu_bar, tearoff=0)
+    file_menu.add_radiobutton(label='1 переменная', value=1, variable=n_param, command=go_next)
+    file_menu.add_radiobutton(label='2 переменных', value=2, variable=n_param, command=go_next)
+    file_menu.add_radiobutton(label='3 переменных', value=3, variable=n_param, command=go_next)
+    file_menu.add_radiobutton(label='4 переменных', value=4, variable=n_param, command=go_next)
+    file_menu.add_radiobutton(label='5 переменных', value=5, variable=n_param, command=go_next)
+    menu_bar.add_cascade(label='Настройки', menu=file_menu)
+    root.configure(menu=menu_bar)
 
 
 greet_label = tk.Label(root, text='Напишите КНФ для вектора:', font=('Arial', 16, 'normal'))
 greet_label.pack(pady=10)
 
-vector_label = tk.Label(root, text=random_vector(3), font=('Arial', 16, 'normal'))
+vector_label = tk.Label(root, text=random_vector(n_param.get()), font=('Arial', 16, 'normal'))
 vector_label.pack()
 
 error_label = tk.Label(root, text='', font=('Arial', 14, 'normal'))
@@ -229,5 +245,7 @@ button_submit.pack(pady=20)
 
 go_next_button = tk.Button(root, text='Новое задание', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=go_next)
 
+
+draw_menu()
 
 root.mainloop()
