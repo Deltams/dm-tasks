@@ -6,6 +6,8 @@ root.title('Задача 5')
 root.geometry('600x500+100+100')
 root.resizable(False, False)
 
+n_param = tk.IntVar(value=3)
+
 attempts = 1  # кол-во попыток
 vars_count = 3  # кол-во переменных
 dict_vector = {}  # Словарь ответов для пользователя; Автоматически заполняется в all_vector
@@ -23,6 +25,11 @@ def residual(vec, k, n):  # остаточная по вектору; vec - vect
 
 
 def all_vector(vars_count):  # Заполнение map_vector; p - param
+    global dict_vector
+    global list_vector
+    dict_vector = {}
+    list_vector= []
+
     len_vector = 2 ** vars_count  # len(vec)
     tmp = 0
     count_all_vectors = 2 ** len_vector
@@ -38,9 +45,11 @@ def all_vector(vars_count):  # Заполнение map_vector; p - param
                 fict_var = fict_var + str(j)
             else:
                 sysh_var = sysh_var + str(j)
-        if len(fict_var) and len(sysh_var):
+        if len(fict_var) and len(sysh_var) or n_param.get() == 1:
             dict_vector[vec] = [sysh_var, fict_var]
             list_vector.append(vec)
+            if len(list_vector) == 100:
+                break
         tmp += 1
 
 
@@ -61,7 +70,7 @@ def check_vector(player_vec, fic_sysh, player_input):
     return False
 
 
-all_vector(vars_count)
+all_vector(n_param.get())
 player_vec = list_vector[int(random.random() * 100) % len(list_vector)]  # Вектор, который передают пользователю
 sfp = '0'
 
@@ -81,6 +90,12 @@ def mack_sfp():
     if tmp == player_vec:
         tmp = list_vector[int(random.random() * 100) % len(list_vector)]
     player_vec = tmp
+    ans = ''
+    for i in range(1, len(player_vec) + 1):
+        ans += player_vec[i - 1]
+        if i % 4 == 0:
+            ans += ' '
+    player_vec = ans
     attempts = 1
     vector_label.configure(text=player_vec)
 
@@ -91,6 +106,10 @@ def send_vector():
     global sfp
 
     entry = user_entry.get()
+    player_vec = ''
+    tmp = vector_label.cget('text').split()
+    for i in range(0, len(tmp)):
+        player_vec += tmp[i]
     if check_data(entry):
         if check_vector(player_vec, sfp, user_entry.get()):
             error_label.configure(text='Ваш ответ верный:)', fg='green')
@@ -107,6 +126,7 @@ def send_vector():
 
 
 def go_next():
+    all_vector(n_param.get())
     button_submit['state'] = 'normal'
     user_entry['state'] = 'normal'
     user_entry.delete(0, 'end')
@@ -133,6 +153,18 @@ def open_child_root():
     label = tk.Label(child_root, text=ans, font=('Arial', 12, 'normal'), justify='left').pack()
 
 
+def draw_menu():
+    menu_bar = tk.Menu(root)
+    file_menu = tk.Menu(menu_bar, tearoff=0)
+    file_menu.add_radiobutton(label='1 переменная', value=1, variable=n_param, command=go_next)
+    file_menu.add_radiobutton(label='2 переменных', value=2, variable=n_param, command=go_next)
+    file_menu.add_radiobutton(label='3 переменных', value=3, variable=n_param, command=go_next)
+    file_menu.add_radiobutton(label='4 переменных', value=4, variable=n_param, command=go_next)
+    file_menu.add_radiobutton(label='5 переменных', value=5, variable=n_param, command=go_next)
+    menu_bar.add_cascade(label='Настройки', menu=file_menu)
+    root.configure(menu=menu_bar)
+
+
 greet_label = tk.Label(root, text='Ваш вектор:', font=('Arial', 16, 'normal'))
 greet_label.pack()
 
@@ -154,5 +186,5 @@ button_help = tk.Button(root, text='Справка', font=('Arial', 12, 'normal'
 button_help.pack(side='bottom', anchor='e')
 
 mack_sfp()
-
+draw_menu()
 root.mainloop()
