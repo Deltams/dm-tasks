@@ -3,7 +3,7 @@ import tkinter as tk
 
 root = tk.Tk()
 root.title('Задача 4')
-root.geometry('600x550+100+100')
+root.geometry('700x580+100+100')
 root.resizable(False, False)
 
 map_vector = {}  # правильные ответы
@@ -68,12 +68,14 @@ def help():  # Для вывода пользователю на экран та
 
 def btn_func():
     user_entry = entry.get()
+    go_next_button.pack(pady=10)
     if user_entry:
         try:
             if map_vector[player_vector[vec][0]] == map_vector[player_vector[int(user_entry) - 1][0]]:
                 ans_label.configure(text="Ваш ответ верный", fg='green')
             else:
                 ans_label.configure(text="Ваш ответ неверный", fg='red')
+                ans_button.pack()
         except IndexError:
             ans_label.configure(text="Вводите числа от 1 до 16!", fg='red')
     else:
@@ -82,7 +84,14 @@ def btn_func():
 
     button_submit['state'] = 'disabled'
     entry['state'] = 'disabled'
-    go_next_button.pack(pady=10)
+
+def print_ans():
+    global player_vector
+    global vec
+        
+    ans = table_p[player_vector[vec][0]-1]
+    ans_label.configure(text=f'{ans}', fg='green')
+    ans_button.pack_forget()
 
 
 def go_next():
@@ -117,5 +126,6 @@ bottom_frame.pack(side='top')
 
 go_next_button = tk.Button(root, text='Новое задание',  font=('Arial', 12, 'normal'), bg='#d4d4d4', command=go_next)
 
+ans_button = tk.Button(text='Показать ответ', font=('Arial', 12, 'normal'), bg='#d4d4d4', command=print_ans)
 
 root.mainloop()
