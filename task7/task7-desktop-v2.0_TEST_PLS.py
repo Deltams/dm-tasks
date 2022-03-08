@@ -216,6 +216,21 @@ def go_next():
     vector_label.configure(text=random_vector(n_param.get()))
 
 
+def open_child_root():
+    child_root = tk.Toplevel(root)
+    child_root.title('Справка')
+    child_root.geometry('550x350+100+100')
+    child_root.resizable(False, False)
+    child_root.grab_set()
+    ans = '\n\nПример ввода:\n\n'
+    ans += '(x1 v x2)*(x3 v -x4)\n\n'
+    ans += 'x1 v x2x3 v -x4\n\n'
+    ans += 'x1vx2x3v-x4\n\n'
+    ans += '(x1v-x2vx3)*(-x1vx2v-x3)&(-x1v-x2vx3)\n\n'
+    ans += "Приятной игры ;)\n\n\n"
+    label = tk.Label(child_root, text=ans, font=('Arial', 14, 'normal'), justify='left').pack()
+
+
 def draw_menu():
     menu_bar = tk.Menu(root)
     file_menu = tk.Menu(menu_bar, tearoff=0)
@@ -245,6 +260,8 @@ button_submit.pack(pady=20)
 
 go_next_button = tk.Button(root, text='Новое задание', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=go_next)
 
+button_help = tk.Button(root, text='Справка', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=open_child_root)
+button_help.pack(side='bottom', anchor='e')
 
 draw_menu()
 
