@@ -7,6 +7,14 @@ root.geometry('600x500+100+100')
 root.resizable(False, False)
 
 
+d = {
+    'x': 'x1',
+    'y': 'x2',
+    'z': 'x3',
+    'u': 'x4',
+}
+
+
 def random_vector(vars_count):
     global vec
     len_vector = 2 ** vars_count
@@ -19,11 +27,16 @@ def random_vector(vars_count):
 
 def string_standard(player_string):
     player_string = player_string.replace(' ', '').lower()
+    player_string = player_string.replace('x1', 'x')
+    player_string = player_string.replace('x', 'x1')
+    player_string = player_string.replace('y', 'x2')
+    player_string = player_string.replace('z', 'x3')
     player_string = player_string.replace('&', '')
     player_string = player_string.replace('*', '')
     player_string = player_string.replace('(', '')
     player_string = player_string.replace(')', '')
     player_string = player_string.replace('x', '')
+    print(player_string)
     ans = []
     tmp = 1
     string = ''
