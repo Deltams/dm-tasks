@@ -181,6 +181,21 @@ def go_next():
     vector_label.configure(text=random_vector(n_param.get()))
 
 
+def open_child_root():
+    child_root = tk.Toplevel(root)
+    child_root.title('Справка')
+    child_root.geometry('550x350+100+100')
+    child_root.resizable(False, False)
+    child_root.grab_set()
+    ans = "\n\nПример ввода данных:\n\n"
+    ans += '(-x1*-x2&x3)v(-x1x2-x3)V(-x1x2x3)v(x1-x2-x3)v(x1-x2x3)v(x1x2-x3)\n\n\n'
+    ans += '-x1*-x2&x3v-x1x2-x3V-x1x2x3vx1-x2-x3vx1-x2x3vx1x2-x3\n\n\n'
+    ans += '-x1*-x2&x3v-x1x2-x3V-x1x2x3vx1-x2-x3vx1-x2x3vx1x2-x3\n\n\n'
+    ans += '-x1*-x2&x3 v -x1x2-x3 V -x1x2x3 v x1-x2-x3 v x1-x2x3 v x1x2-x3\n\n\n'
+    ans += "Приятной игры ;)\n\n\n\n"
+    label = tk.Label(child_root, text=ans, font=('Arial', 12, 'normal'), justify='left').pack()
+
+
 def draw_menu():
     menu_bar = tk.Menu(root)
     file_menu = tk.Menu(menu_bar, tearoff=0)
@@ -209,6 +224,9 @@ button_submit = tk.Button(root, text='Ответить', font=('Arial', 12, 'nor
 button_submit.pack(pady=20)
 
 go_next_button = tk.Button(root, text='Новое задание', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=go_next)
+
+button_help = tk.Button(root, text='Справка', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=open_child_root)
+button_help.pack(side='bottom', anchor='e')
 
 draw_menu()
 root.mainloop()
