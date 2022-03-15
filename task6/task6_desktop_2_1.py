@@ -6,9 +6,14 @@ root = tk.Tk()
 root.title('Задача 6')
 root.geometry('600x500+100+100')
 root.resizable(False, False)
-root.iconbitmap('icon.ico')
+
+try:
+    root.iconbitmap('icon.ico')
+except:
+    pass
 
 n_param = tk.IntVar(value=3)
+
 
 def random_vector(vars_count):
     global vec
@@ -101,8 +106,7 @@ def dnf_check(player_string, vec):
 
     for i in range(1, len(player_string)):  # Проверка повторов символов (Перемер xx, **, &&, 11, 22, 12)
         if player_string[i - 1] == player_string[i] \
-                or ('1' <= player_string[i - 1] <= '9' \
-                    and '1' <= player_string[i] <= '9'):
+                or ('1' <= player_string[i - 1] <= '9' and '1' <= player_string[i] <= '9'):
             return False
 
     player_string = player_string.replace('&', '')
@@ -179,7 +183,8 @@ def send_answer():
 
     button_submit['state'] = 'disabled'
     entry['state'] = 'disabled'
-    go_next_button.pack()
+    go_next_button.pack(side='left', padx=5)
+    remake_button.pack(side='left', padx=5)
 
 
 def go_next():
@@ -187,8 +192,18 @@ def go_next():
     entry['state'] = 'normal'
     entry.delete(0, 'end')
     go_next_button.pack_forget()
+    remake_button.pack_forget()
     error_label.configure(text='')
     vector_label.configure(text=random_vector(n_param.get()))
+
+
+def remake_task():
+    button_submit['state'] = 'normal'
+    entry['state'] = 'normal'
+    entry.delete(0, 'end')
+    go_next_button.pack_forget()
+    remake_button.pack_forget()
+    error_label.configure(text='')
 
 
 def open_child_root():
@@ -230,10 +245,12 @@ error_label.pack()
 entry = tk.Entry(root, font=('Arial', 14, 'normal'), width=40)
 entry.pack()
 
-button_submit = tk.Button(root, text='Ответить', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=send_answer)
-button_submit.pack(pady=20)
-
-go_next_button = tk.Button(root, text='Новое задание', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=go_next)
+fr = tk.Frame(root)
+button_submit = tk.Button(fr, text='Ответить', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=send_answer)
+button_submit.pack(pady=10)
+go_next_button = tk.Button(fr, text='Новое задание', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=go_next)
+remake_button = tk.Button(fr, text='Перепройти', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=remake_task)
+fr.pack()
 
 button_help = tk.Button(root, text='Справка', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=open_child_root)
 button_help.pack(side='bottom', anchor='e')
