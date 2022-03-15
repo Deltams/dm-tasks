@@ -68,7 +68,6 @@ def random_vector2(vars_count):
         while len(ans) < 4:
             v = random_vector(vars_count)
             ans.append(v)
-    print(r)
     return ans
 
 
