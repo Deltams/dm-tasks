@@ -118,18 +118,25 @@ def send_vector():
     if check_data(entry):
         if check_vector(player_vec, sfp, user_entry.get()):
             error_label.configure(text='Ваш ответ верный:)', fg='green')
+
+            go_next_button.pack(side='left', padx=5)
         else:
             error_label.configure(text='Ответ неверный!', fg='#ff4000')
             attempts -= 1
+
+            go_next_button.pack(side='left', padx=5)
+            remake_button.pack(side='left', padx=5)
+            correct_answer_button.pack(side='left', padx=5)
     else:
         error_label.configure(text='Ошибка ввода данных!', fg='#ff4000')
         attempts -= 1
 
+        go_next_button.pack(side='left', padx=5)
+        remake_button.pack(side='left', padx=5)
+        correct_answer_button.pack(side='left', padx=5)
+
     button_submit['state'] = 'disabled'
     user_entry['state'] = 'disabled'
-    go_next_button.pack(side='left', padx=5)
-    remake_button.pack(side='left', padx=5)
-    correct_answer_button.pack(side='left', padx=5)
 
 
 def go_next():
