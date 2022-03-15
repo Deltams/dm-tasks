@@ -6,7 +6,10 @@ root = tk.Tk()
 root.title('Задача 5')
 root.geometry('600x500+100+100')
 root.resizable(False, False)
-root.iconbitmap('icon.ico')
+try:
+    root.iconbitmap('icon.ico')
+except:
+    pass
 
 n_param = tk.IntVar(value=3)
 
@@ -124,7 +127,9 @@ def send_vector():
 
     button_submit['state'] = 'disabled'
     user_entry['state'] = 'disabled'
-    go_next_button.pack()
+    go_next_button.pack(side='left', padx=5)
+    remake_button.pack(side='left', padx=5)
+    correct_answer_button.pack(side='left', padx=5)
 
 
 def go_next():
@@ -133,8 +138,29 @@ def go_next():
     user_entry['state'] = 'normal'
     user_entry.delete(0, 'end')
     go_next_button.pack_forget()
+    remake_button.pack_forget()
+    correct_answer_button.pack_forget()
     error_label.configure(text='')
     mack_sfp()
+
+
+def remake_task():
+    button_submit['state'] = 'normal'
+    user_entry['state'] = 'normal'
+    user_entry.delete(0, 'end')
+    go_next_button.pack_forget()
+    remake_button.pack_forget()
+    correct_answer_button.pack_forget()
+    error_label.configure(text='')
+
+
+def show_correct_answer():
+    player_vec = ''
+    tmp = vector_label.cget('text').split()
+    for i in range(0, len(tmp)):
+        player_vec += tmp[i]
+    error_label.configure(text=f'Правильный ответ - {dict_vector[player_vec][sfp]}', fg='green')
+    correct_answer_button.pack_forget()
 
 
 def open_child_root():
@@ -180,9 +206,13 @@ user_entry = tk.Entry(root, font=('Arial', 14, 'normal'), width=40)
 user_entry.pack()
 
 button_submit = tk.Button(root, text='Ответить', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=send_vector)
-button_submit.pack()
+button_submit.pack(pady=10)
 
-go_next_button = tk.Button(root, text='Новое задание', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=go_next)
+fr = tk.Frame(root)
+go_next_button = tk.Button(fr, text='Новое задание', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=go_next)
+remake_button = tk.Button(fr, text='Перепройти', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=remake_task)
+correct_answer_button = tk.Button(fr, text='Правильный ответ', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=show_correct_answer)
+fr.pack()
 
 button_help = tk.Button(root, text='Справка', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=open_child_root)
 button_help.pack(side='bottom', anchor='e')
