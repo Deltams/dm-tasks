@@ -6,15 +6,21 @@ root = tk.Tk()
 root.title('Задача 11')
 root.geometry('800x580+100+100')
 root.resizable(False, False)
-root.iconbitmap('icon.ico')
+
+try:
+    root.iconbitmap('icon.ico')
+except:
+    pass
 
 n_param = tk.IntVar(value=3)
+
 
 def return_norm_vec(svec, start):
     ans = ''
     for i in range(start, len(svec)):
         ans += svec[i]
     return ans.replace(' ', '')
+
 
 def random_vector(vars_count):
     len_vector = 2 ** vars_count
@@ -23,39 +29,40 @@ def random_vector(vars_count):
     vec = str(bin(tmp)[2:])
     vec = "0" * (len_vector - len(vec)) + vec
     ans = ''
-    for i in range(1, len(vec)+1):
-        ans += vec[i-1]
+    for i in range(1, len(vec) + 1):
+        ans += vec[i - 1]
         if i % 4 == 0:
             ans += ' '
     return ans
 
+
 def random_vector2(vars_count):
     ans = []
-    r = int(random.random()*10) % 6 # Выбор к какому классу будет принадлежать
+    r = int(random.random() * 10) % 6  # Выбор к какому классу будет принадлежать
     if r == 0:
         while len(ans) < 4:
             v = random_vector(vars_count)
-            if check_t0(return_norm_vec(v,0)):
+            if check_t0(return_norm_vec(v, 0)):
                 ans.append(v)
     elif r == 1:
         while len(ans) < 4:
             v = random_vector(vars_count)
-            if check_t1(return_norm_vec(v,0)):
+            if check_t1(return_norm_vec(v, 0)):
                 ans.append(v)
     elif r == 2:
         while len(ans) < 4:
             v = random_vector(vars_count)
-            if check_s(return_norm_vec(v,0)):
+            if check_s(return_norm_vec(v, 0)):
                 ans.append(v)
     elif r == 3:
         while len(ans) < 4:
             v = random_vector(vars_count)
-            if check_ln(return_norm_vec(v,0)):
+            if check_ln(return_norm_vec(v, 0)):
                 ans.append(v)
     elif r == 4:
         while len(ans) < 4:
             v = random_vector(vars_count)
-            if check_m(return_norm_vec(v,0)):
+            if check_m(return_norm_vec(v, 0)):
                 ans.append(v)
     else:
         while len(ans) < 4:
@@ -63,6 +70,7 @@ def random_vector2(vars_count):
             ans.append(v)
     print(r)
     return ans
+
 
 def what_degree_two(number):  # В какую степень двойки возведено число; -1: не является степенью двойки
     tmp = 1
@@ -176,12 +184,13 @@ def check_completeness(vec):
             ans[4] = 0
     return ans
 
+
 def print_ans():
     vec1 = return_norm_vec(vector_label1.cget('text').split(), 1)
     vec2 = return_norm_vec(vector_label2.cget('text').split(), 1)
     vec3 = return_norm_vec(vector_label3.cget('text').split(), 1)
     vec4 = return_norm_vec(vector_label4.cget('text').split(), 1)
-        
+
     tmp = check_completeness([vec1, vec2, vec3, vec4])
     t = 0
     for i in tmp:
@@ -206,8 +215,8 @@ def print_ans():
         ans += 'M '
     error_label.configure(text=f'{ans}', fg='green')
     ans_button.pack_forget()
-    
-    
+
+
 # Проверка ответа пользователя
 def send_answer():
     vec1 = return_norm_vec(vector_label1.cget('text').split(), 1)
@@ -225,17 +234,30 @@ def send_answer():
     if (var1.get() == True and p_sis == 1) or (var1.get() == False and p_sis == 0):
         error_label.configure(text='Неправильный ответ!', fg='red')
         check_false_ans = True
+
+        new_button.pack(side='left', padx=5)
+        remake_task_button.pack(side='left', padx=5)
+        if check_false_ans:
+            ans_button.pack(side='left', padx=5)
     elif var1.get() == False and p_sis == 1:
-        error_label.configure(text='Правильный ответ!', fg='green')  
-    elif var4_t0.get() == ans[0] and var4_t1.get() == ans[1] and var4_s.get() == ans[2] and \
-        var4_ln.get() == ans[3] and var4_m.get() == ans[4]:
         error_label.configure(text='Правильный ответ!', fg='green')
+
+        new_button.pack(side='left')
+    elif var4_t0.get() == ans[0] and var4_t1.get() == ans[1] and var4_s.get() == ans[2] and \
+            var4_ln.get() == ans[3] and var4_m.get() == ans[4]:
+        error_label.configure(text='Правильный ответ!', fg='green')
+
+        new_button.pack(side='left')
     else:
         error_label.configure(text='Неправильный ответ!', fg='red')
         check_false_ans = True
-    new_button.pack()
-    if check_false_ans:
-        ans_button.pack()
+
+        new_button.pack(side='left', padx=5)
+        remake_task_button.pack(side='left', padx=5)
+
+        if check_false_ans:
+            ans_button.pack(side='left', padx=5)
+
     button_submit['state'] = 'disabled'
     cb1['state'] = 'disabled'
     cb4_t0['state'] = 'disabled'
@@ -256,6 +278,7 @@ def open_child_root():
     ans = "\nЕсли верных ответов нет - оставьте флажок пустым\n"
     label_ch2 = tk.Label(child_root, text=ans, font=('Arial', 12, 'normal'), justify='left').pack()
 
+
 def open_cb1():
     cb4_t0.pack(side='left')
     cb4_t1.pack(side='left')
@@ -272,6 +295,7 @@ def close_cb1():
     cb4_ln.pack_forget()
     cb4_m.pack_forget()
     cb1.configure(command=open_cb1)
+
 
 def go_next():
     button_submit['state'] = 'normal'
@@ -298,27 +322,56 @@ def go_next():
     close_cb1()
     error_label.configure(text='')
     new_button.pack_forget()
+    remake_task_button.pack_forget()
     ans_button.pack_forget()
+
+
+def remake_task():
+    button_submit['state'] = 'normal'
+    cb1['state'] = 'normal'
+    cb4_t0['state'] = 'normal'
+    cb4_t1['state'] = 'normal'
+    cb4_s['state'] = 'normal'
+    cb4_ln['state'] = 'normal'
+    cb4_m['state'] = 'normal'
+
+    cb1.deselect()
+    cb4_t0.deselect()
+    cb4_t1.deselect()
+    cb4_s.deselect()
+    cb4_ln.deselect()
+    cb4_m.deselect()
+    close_cb1()
+
+    error_label.configure(text='')
+    new_button.pack_forget()
+    remake_task_button.pack_forget()
+    ans_button.pack_forget()
+
 
 # Выпадающие меню
 def draw_menu():
     menu_bar = tk.Menu(root)
     file_menu = tk.Menu(menu_bar, tearoff=0)
-    file_menu.add_radiobutton(label='1 переменная', value=1, variable=n_param, command=go_next, font=('Arial', 12, 'normal'))
-    file_menu.add_radiobutton(label='2 переменных', value=2, variable=n_param, command=go_next, font=('Arial', 12, 'normal'))
-    file_menu.add_radiobutton(label='3 переменных', value=3, variable=n_param, command=go_next, font=('Arial', 12, 'normal'))
-    file_menu.add_radiobutton(label='4 переменных', value=4, variable=n_param, command=go_next, font=('Arial', 12, 'normal'))
-    file_menu.add_radiobutton(label='5 переменных', value=5, variable=n_param, command=go_next, font=('Arial', 12, 'normal'))
+    file_menu.add_radiobutton(label='1 переменная', value=1, variable=n_param, command=go_next,
+                              font=('Arial', 12, 'normal'))
+    file_menu.add_radiobutton(label='2 переменных', value=2, variable=n_param, command=go_next,
+                              font=('Arial', 12, 'normal'))
+    file_menu.add_radiobutton(label='3 переменных', value=3, variable=n_param, command=go_next,
+                              font=('Arial', 12, 'normal'))
+    file_menu.add_radiobutton(label='4 переменных', value=4, variable=n_param, command=go_next,
+                              font=('Arial', 12, 'normal'))
+    file_menu.add_radiobutton(label='5 переменных', value=5, variable=n_param, command=go_next,
+                              font=('Arial', 12, 'normal'))
     menu_bar.add_cascade(label='Настройки', menu=file_menu)
     root.configure(menu=menu_bar)
-    
+
 
 greet_label = tk.Label(root, text='Определите является ли набор функций полным', font=('Arial', 18, 'normal'))
 greet_label.pack()
 
 error_label = tk.Label(root, text='', font=('Arial', 16, 'normal'))
 error_label.pack()
-
 
 # First frame
 fr1 = tk.Frame()
@@ -327,14 +380,12 @@ vector_label1.pack(side='left', anchor="w")
 
 fr1.pack(anchor="w", padx=150, pady=10)
 
-
 # Second Frame
 fr2 = tk.Frame()
 vector_label2 = tk.Label(fr2, text=f'2. {random_vector(n_param.get())}', font=('Arial', 18, 'normal'))
 vector_label2.pack(side='left', anchor="w")
 
 fr2.pack(anchor="w", padx=150, pady=10)
-
 
 # Third Frame
 fr3 = tk.Frame()
@@ -384,12 +435,14 @@ fr1_1.pack(anchor="w", padx=150, pady=10)
 
 fr4_child.pack(anchor="w", padx=160)
 
-new_button = tk.Button(text='Новое задание', font=('Arial', 14, 'normal'), bg='#bfbfbf', command=go_next)
-
-ans_button = tk.Button(text='Показать ответ', font=('Arial', 14, 'normal'), bg='#bfbfbf', command=print_ans)
-
 button_submit = tk.Button(root, text='Ответить', font=('Arial', 14, 'normal'), bg='#bfbfbf', command=send_answer)
 button_submit.pack(pady=10)
+
+but_fr = tk.Frame(root)
+new_button = tk.Button(but_fr, text='Новое задание', font=('Arial', 14, 'normal'), bg='#bfbfbf', command=go_next)
+remake_task_button = tk.Button(but_fr, text='Перепройти', font=('Arial', 14, 'normal'), bg='#bfbfbf', command=remake_task)
+ans_button = tk.Button(but_fr, text='Показать ответ', font=('Arial', 14, 'normal'), bg='#bfbfbf', command=print_ans)
+but_fr.pack()
 
 button_help = tk.Button(root, text='Справка', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=open_child_root)
 button_help.pack(side='bottom', anchor='e')
