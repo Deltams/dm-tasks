@@ -8,12 +8,15 @@ root.geometry('800x580+100+100')
 root.resizable(False, False)
 root.iconbitmap('icon.ico')
 
-vec = '01111110'
-
 n_param = tk.IntVar(value=3)
 
+def return_norm_vec(svec, start):
+    ans = ''
+    for i in range(start, len(svec)):
+        ans += svec[i]
+    return ans.replace(' ', '')
+
 def random_vector(vars_count):
-    global vec
     len_vector = 2 ** vars_count
     count_all_vectors = 2 ** len_vector
     tmp = int(random.random() * (10 ** len(str(count_all_vectors)))) % count_all_vectors
@@ -26,6 +29,40 @@ def random_vector(vars_count):
             ans += ' '
     return ans
 
+def random_vector2(vars_count):
+    ans = []
+    r = int(random.random()*10) % 6 # Выбор к какому классу будет принадлежать
+    if r == 0:
+        while len(ans) < 4:
+            v = random_vector(vars_count)
+            if check_t0(return_norm_vec(v,0)):
+                ans.append(v)
+    elif r == 1:
+        while len(ans) < 4:
+            v = random_vector(vars_count)
+            if check_t1(return_norm_vec(v,0)):
+                ans.append(v)
+    elif r == 2:
+        while len(ans) < 4:
+            v = random_vector(vars_count)
+            if check_s(return_norm_vec(v,0)):
+                ans.append(v)
+    elif r == 3:
+        while len(ans) < 4:
+            v = random_vector(vars_count)
+            if check_ln(return_norm_vec(v,0)):
+                ans.append(v)
+    elif r == 4:
+        while len(ans) < 4:
+            v = random_vector(vars_count)
+            if check_m(return_norm_vec(v,0)):
+                ans.append(v)
+    else:
+        while len(ans) < 4:
+            v = random_vector(vars_count)
+            ans.append(v)
+    print(r)
+    return ans
 
 def what_degree_two(number):  # В какую степень двойки возведено число; -1: не является степенью двойки
     tmp = 1
@@ -140,22 +177,10 @@ def check_completeness(vec):
     return ans
 
 def print_ans():
-    vec1 = ''
-    tmp = vector_label1.cget('text').split()
-    for i in range(1, len(tmp)):
-        vec1 += tmp[i]
-    vec2 = ''
-    tmp = vector_label2.cget('text').split()
-    for i in range(1, len(tmp)):
-        vec2 += tmp[i]
-    vec3 = ''
-    tmp = vector_label3.cget('text').split()
-    for i in range(1, len(tmp)):
-        vec3 += tmp[i]
-    vec4 = ''
-    tmp = vector_label4.cget('text').split()
-    for i in range(1, len(tmp)):
-        vec4 += tmp[i]
+    vec1 = return_norm_vec(vector_label1.cget('text').split(), 1)
+    vec2 = return_norm_vec(vector_label2.cget('text').split(), 1)
+    vec3 = return_norm_vec(vector_label3.cget('text').split(), 1)
+    vec4 = return_norm_vec(vector_label4.cget('text').split(), 1)
         
     tmp = check_completeness([vec1, vec2, vec3, vec4])
     t = 0
@@ -185,22 +210,10 @@ def print_ans():
     
 # Проверка ответа пользователя
 def send_answer():
-    vec1 = ''
-    tmp = vector_label1.cget('text').split()
-    for i in range(1, len(tmp)):
-        vec1 += tmp[i]
-    vec2 = ''
-    tmp = vector_label2.cget('text').split()
-    for i in range(1, len(tmp)):
-        vec2 += tmp[i]
-    vec3 = ''
-    tmp = vector_label3.cget('text').split()
-    for i in range(1, len(tmp)):
-        vec3 += tmp[i]
-    vec4 = ''
-    tmp = vector_label4.cget('text').split()
-    for i in range(1, len(tmp)):
-        vec4 += tmp[i]
+    vec1 = return_norm_vec(vector_label1.cget('text').split(), 1)
+    vec2 = return_norm_vec(vector_label2.cget('text').split(), 1)
+    vec3 = return_norm_vec(vector_label3.cget('text').split(), 1)
+    vec4 = return_norm_vec(vector_label4.cget('text').split(), 1)
 
     ans = check_completeness([vec1, vec2, vec3, vec4])
     p_sis = 1
@@ -268,10 +281,11 @@ def go_next():
     cb4_s['state'] = 'normal'
     cb4_ln['state'] = 'normal'
     cb4_m['state'] = 'normal'
-    vector_label1.configure(text=f'1. {random_vector(n_param.get())}')
-    vector_label2.configure(text=f'2. {random_vector(n_param.get())}')
-    vector_label3.configure(text=f'3. {random_vector(n_param.get())}')
-    vector_label4.configure(text=f'4. {random_vector(n_param.get())}')
+    vec = random_vector2(n_param.get())
+    vector_label1.configure(text=f'1. {vec[0]}')
+    vector_label2.configure(text=f'2. {vec[1]}')
+    vector_label3.configure(text=f'3. {vec[2]}')
+    vector_label4.configure(text=f'4. {vec[3]}')
 
     cb1.deselect()
 
