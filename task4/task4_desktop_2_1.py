@@ -6,7 +6,11 @@ root = tk.Tk()
 root.title('Задача 4')
 root.geometry('600x580+100+100')
 root.resizable(False, False)
-root.iconbitmap('icon.ico')
+
+try:
+    root.iconbitmap('icon.ico')
+except:
+    pass
 
 map_vector = {}  # правильные ответы
 player_vector = []  # для перемешивания вектора и выдачи пользователю
@@ -70,28 +74,28 @@ def help():  # Для вывода пользователю на экран та
 
 def btn_func():
     user_entry = entry.get()
-    go_next_button.pack()
     if user_entry:
         try:
             if map_vector[player_vector[vec][0]] == map_vector[player_vector[int(user_entry) - 1][0]]:
                 ans_label.configure(text="Ваш ответ верный", fg='green')
             else:
                 ans_label.configure(text="Ваш ответ неверный", fg='red')
-                ans_button.pack()
+
         except IndexError:
             ans_label.configure(text="Вводите числа от 1 до 16!", fg='red')
     else:
-        ans_label.configure(text="Вы ввели неверные данные!", fg='red')
-
+        ans_label.configure(text="Вы ввели некорректные данные!", fg='red')
     button_submit['state'] = 'disabled'
     entry['state'] = 'disabled'
-    remake_button.pack()
+
+    go_next_button.pack(side='left', padx=5)
+    remake_button.pack(side='left', padx=5)
+    ans_button.pack(side='left', padx=5)
 
 
 def print_ans():
     global player_vector
     global vec
-
     ans = table_p[player_vector[vec][0] - 1]
     ans_label.configure(text=f'{ans}', fg='green')
     ans_button.pack_forget()
@@ -100,21 +104,24 @@ def print_ans():
 def go_next():
     button_submit['state'] = 'normal'
     entry['state'] = 'normal'
+
     greet_label.configure(text=help())
-    go_next_button.pack_forget()
-    remake_button.pack_forget()
     ans_label.configure(text='')
     entry.delete(0, 'end')
-    greet_label.configure(text=help())
+
+    go_next_button.pack_forget()
+    remake_button.pack_forget()
+    ans_button.pack_forget()
 
 
 def remake_button():
     button_submit['state'] = 'normal'
     entry['state'] = 'normal'
+    ans_label.configure(text='')
+    entry.delete(0, 'end')
     go_next_button.pack_forget()
     remake_button.pack_forget()
-    entry.delete(0, 'end')
-    ans_label.configure(text='')
+    ans_button.pack_forget()
 
 
 top_frame = tk.Frame(root, pady=6)
@@ -136,9 +143,11 @@ button_submit.pack(side='left')
 
 bottom_frame.pack(side='top')
 
-go_next_button = tk.Button(root, text='Новое задание', font=('Arial', 12, 'normal'), bg='#d4d4d4', command=go_next)
-remake_button = tk.Button(root, text='Перепройти', font=('Arial', 12, 'normal'), bg='#d4d4d4', command=remake_button)
-ans_button = tk.Button(text='Показать ответ', font=('Arial', 12, 'normal'), bg='#d4d4d4', command=print_ans)
+fr = tk.Frame(root)
+go_next_button = tk.Button(fr, text='Новое задание', font=('Arial', 12, 'normal'), bg='#d4d4d4', command=go_next)
+remake_button = tk.Button(fr, text='Перепройти', font=('Arial', 12, 'normal'), bg='#d4d4d4', command=remake_button)
+ans_button = tk.Button(fr, text='Показать ответ', font=('Arial', 12, 'normal'), bg='#d4d4d4', command=print_ans)
+fr.pack(pady=10)
 
 root.mainloop()
 os.startfile('BoolGame')
