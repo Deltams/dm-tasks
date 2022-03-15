@@ -21,6 +21,13 @@ def return_norm_vec(svec, start):
         ans += svec[i]
     return ans.replace(' ', '')
 
+def vec_split(vec):
+    tmp = ''
+    for i in range(1, len(vec) + 1):
+        tmp += vec[i - 1]
+        if i % 4 == 0:
+            tmp += ' '
+    return tmp
 
 def random_vector(vars_count):
     len_vector = 2 ** vars_count
@@ -28,43 +35,77 @@ def random_vector(vars_count):
     tmp = int(random.random() * (10 ** len(str(count_all_vectors)))) % count_all_vectors
     vec = str(bin(tmp)[2:])
     vec = "0" * (len_vector - len(vec)) + vec
-    ans = ''
-    for i in range(1, len(vec) + 1):
-        ans += vec[i - 1]
-        if i % 4 == 0:
-            ans += ' '
-    return ans
+    return vec_split(vec)
 
 
 def random_vector2(vars_count):
     ans = []
-    r = int(random.random() * 10) % 6  # Выбор к какому классу будет принадлежать
-    if r == 0:
+    # Выбор к какому классу будет принадлежать
+    r = int(random.random() * 10) % 6  
+    if r == 0: #T0
         while len(ans) < 4:
             v = random_vector(vars_count)
             if check_t0(return_norm_vec(v, 0)):
                 ans.append(v)
-    elif r == 1:
+    elif r == 1: #T1
         while len(ans) < 4:
             v = random_vector(vars_count)
             if check_t1(return_norm_vec(v, 0)):
                 ans.append(v)
-    elif r == 2:
+    elif r == 2: #S
         while len(ans) < 4:
-            v = random_vector(vars_count)
-            if check_s(return_norm_vec(v, 0)):
-                ans.append(v)
-    elif r == 3:
+            ans_s1 = ''
+            ans_s2 = ''
+            for i in range(2**(vars_count-1)):
+                if int(random.random()*10) % 2 == 0:
+                    ans_s1 += '0'
+                    ans_s2 = '1' + ans_s2
+                else:
+                    ans_s1 += '1'
+                    ans_s2 = '0' + ans_s2
+            ans.append(vec_split(ans_s1 + ans_s2))
+    elif r == 3: #L
         while len(ans) < 4:
-            v = random_vector(vars_count)
-            if check_ln(return_norm_vec(v, 0)):
-                ans.append(v)
-    elif r == 4:
+            ans_ln = ''
+            tmp = [0]*(vars_count+1)
+            tmp[0] = int(random.random()*10) % 2
+            for i in range(1, vars_count+1):
+                if int(random.random()*10) % 3 != 0:
+                    tmp[i] = 1
+            for i in range(2**vars_count):
+                vec = str(bin(i)[2:])
+                vec = "0" * (vars_count - len(vec)) + vec
+                tans = tmp[0]
+                for j in range(len(vec)):
+                    if tmp[j+1] == 1 and vec[j] == '1':
+                        tans += 1
+                ans_ln += str(tans % 2)
+            ans.append(vec_split(ans_ln))
+    elif r == 4: #M
         while len(ans) < 4:
-            v = random_vector(vars_count)
-            if check_m(return_norm_vec(v, 0)):
-                ans.append(v)
-    else:
+            ans_m = ''
+            t_mp = {'0'*vars_count: '0'}
+            if int(random.random()*100) % 13 == 0:
+                t_mp['0'*vars_count] = '1'
+            ans_m += t_mp['0'*vars_count]
+            for i in range(1, 2**vars_count):
+                vec = str(bin(i)[2:])
+                vec = "0" * (vars_count - len(vec)) + vec
+                for j in range(len(vec)):
+                    if vec[j] == '1':
+                        tmp = vec[:j] + '0' + vec[j+1:]
+                        if t_mp[tmp] == '1':
+                            t_mp[vec] = '1'
+                            break
+                        else:
+                            if int(random.random()*10) % 7 != 0:
+                                t_mp[vec] = '0'
+                            else:
+                                t_mp[vec] = '1'
+                                break
+                ans_m += t_mp[vec]
+            ans.append(vec_split(ans_m))           
+    else: # random
         while len(ans) < 4:
             v = random_vector(vars_count)
             ans.append(v)
