@@ -6,10 +6,15 @@ root = tk.Tk()
 root.title('Задача 10')
 root.geometry('800x580+100+100')
 root.resizable(False, False)
-root.iconbitmap('icon.ico')
+
+try:
+    root.iconbitmap('icon.ico')
+except:
+    pass
 
 vec = '01111110'
 n_param = tk.IntVar(value=3)
+
 
 def random_vector(vars_count):
     global vec
@@ -19,8 +24,8 @@ def random_vector(vars_count):
     vec = str(bin(tmp)[2:])
     vec = "0" * (len_vector - len(vec)) + vec
     ans = ''
-    for i in range(1, len(vec)+1):
-        ans += vec[i-1]
+    for i in range(1, len(vec) + 1):
+        ans += vec[i - 1]
         if i % 4 == 0:
             ans += ' '
     return ans
@@ -121,6 +126,7 @@ def check_m(vec):
                 return False
     return True
 
+
 def print_ans():
     vec = ''
     tmp = vector_label.cget('text').split()
@@ -153,6 +159,7 @@ def print_ans():
     error_label.configure(text=f'{ans}', fg='green')
     ans_button.pack_forget()
 
+
 def send_answer():
     vec = ''
     tmp = vector_label.cget('text').split()
@@ -162,13 +169,17 @@ def send_answer():
     if var1.get() == check_t0(vec) and var2.get() == check_t1(vec) and var3.get() == check_s(vec) and \
             var4.get() == check_ln(vec) and var5.get() == check_m(vec):
         error_label.configure(text='Правильный ответ!', fg='green')
+
+        new_button.pack(side='left')
     else:
         error_label.configure(text='Неправильный ответ!', fg='red')
         check_false_ans = True
-        
-    new_button.pack()
-    if check_false_ans:
-        ans_button.pack()
+
+        new_button.pack(side='left', padx=5)
+        remake_task_button.pack(side='left', padx=5)
+        if check_false_ans:
+            ans_button.pack(padx=5)
+
     button_submit['state'] = 'disabled'
     c1['state'] = 'disabled'
     c2['state'] = 'disabled'
@@ -176,16 +187,6 @@ def send_answer():
     c4['state'] = 'disabled'
     c5['state'] = 'disabled'
 
-
-def open_child_root():
-    child_root = tk.Toplevel(root)
-    child_root.title('Справка')
-    child_root.geometry('550x350+100+100')
-    child_root.resizable(False, False)
-    child_root.grab_set()
-    ans = "\nЕсли вы считаете утверждение верным - нажмите на флажок\n"
-    ans += "\nЕсли верных ответов нет - оставьте флажок пустым\n"
-    label = tk.Label(child_root, text=ans, font=('Arial', 12, 'normal'), justify='left').pack()
 
 def go_next():
     button_submit['state'] = 'normal'
@@ -204,19 +205,58 @@ def go_next():
 
     error_label.configure(text='')
     new_button.pack_forget()
+    remake_task_button.pack_forget()
     ans_button.pack_forget()
+
+
+def remake_task():
+    button_submit['state'] = 'normal'
+    c1['state'] = 'normal'
+    c2['state'] = 'normal'
+    c3['state'] = 'normal'
+    c4['state'] = 'normal'
+    c5['state'] = 'normal'
+
+    c1.deselect()
+    c2.deselect()
+    c3.deselect()
+    c4.deselect()
+    c5.deselect()
+
+    error_label.configure(text='')
+    new_button.pack_forget()
+    remake_task_button.pack_forget()
+    ans_button.pack_forget()
+
+
+def open_child_root():
+    child_root = tk.Toplevel(root)
+    child_root.title('Справка')
+    child_root.geometry('550x350+100+100')
+    child_root.resizable(False, False)
+    child_root.grab_set()
+    ans = "\nЕсли вы считаете утверждение верным - нажмите на флажок\n"
+    ans += "\nЕсли верных ответов нет - оставьте флажок пустым\n"
+    label = tk.Label(child_root, text=ans, font=('Arial', 12, 'normal'), justify='left').pack()
+
 
 # Выпадающие меню
 def draw_menu():
     menu_bar = tk.Menu(root)
     file_menu = tk.Menu(menu_bar, tearoff=0)
-    file_menu.add_radiobutton(label='1 переменная', value=1, variable=n_param, command=go_next, font=('Arial', 12, 'normal'))
-    file_menu.add_radiobutton(label='2 переменных', value=2, variable=n_param, command=go_next, font=('Arial', 12, 'normal'))
-    file_menu.add_radiobutton(label='3 переменных', value=3, variable=n_param, command=go_next, font=('Arial', 12, 'normal'))
-    file_menu.add_radiobutton(label='4 переменных', value=4, variable=n_param, command=go_next, font=('Arial', 12, 'normal'))
-    file_menu.add_radiobutton(label='5 переменных', value=5, variable=n_param, command=go_next, font=('Arial', 12, 'normal'))
+    file_menu.add_radiobutton(label='1 переменная', value=1, variable=n_param, command=go_next,
+                              font=('Arial', 12, 'normal'))
+    file_menu.add_radiobutton(label='2 переменных', value=2, variable=n_param, command=go_next,
+                              font=('Arial', 12, 'normal'))
+    file_menu.add_radiobutton(label='3 переменных', value=3, variable=n_param, command=go_next,
+                              font=('Arial', 12, 'normal'))
+    file_menu.add_radiobutton(label='4 переменных', value=4, variable=n_param, command=go_next,
+                              font=('Arial', 12, 'normal'))
+    file_menu.add_radiobutton(label='5 переменных', value=5, variable=n_param, command=go_next,
+                              font=('Arial', 12, 'normal'))
     menu_bar.add_cascade(label='Настройки', menu=file_menu)
     root.configure(menu=menu_bar)
+
 
 greet_label = tk.Label(root, text='Отметьте верные утверждения для функции', font=('Arial', 18, 'normal'))
 greet_label.pack(pady=5)
@@ -276,13 +316,14 @@ fr5.pack(anchor="w", pady=10, padx=90)
 
 checkbox_frame.pack(anchor="w", padx=30)
 
-new_button = tk.Button(text='Новое задание', font=('Arial', 14, 'normal'), bg='#bfbfbf', command=go_next)
-
-ans_button = tk.Button(text='Показать ответ', font=('Arial', 14, 'normal'), bg='#bfbfbf', command=print_ans)
-
 button_submit = tk.Button(root, text='Ответить', font=('Arial', 14, 'normal'), bg='#bfbfbf', command=send_answer)
 button_submit.pack(pady=20)
 
+but_fr = tk.Frame(root)
+new_button = tk.Button(but_fr, text='Новое задание', font=('Arial', 14, 'normal'), bg='#bfbfbf', command=go_next)
+remake_task_button = tk.Button(but_fr, text='Перепройти', font=('Arial', 14, 'normal'), bg='#bfbfbf', command=remake_task)
+ans_button = tk.Button(but_fr, text='Показать ответ', font=('Arial', 14, 'normal'), bg='#bfbfbf', command=print_ans)
+but_fr.pack()
 
 button_help = tk.Button(root, text='Справка', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=open_child_root)
 button_help.pack(side='bottom', anchor='e')
