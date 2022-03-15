@@ -78,19 +78,29 @@ def btn_func():
         try:
             if map_vector[player_vector[vec][0]] == map_vector[player_vector[int(user_entry) - 1][0]]:
                 ans_label.configure(text="Ваш ответ верный", fg='green')
+
+                go_next_button.pack(side='left', padx=5)
             else:
                 ans_label.configure(text="Ваш ответ неверный", fg='red')
 
+                go_next_button.pack(side='left', padx=5)
+                remake_button.pack(side='left', padx=5)
+                ans_button.pack(side='left', padx=5)
+
         except IndexError:
             ans_label.configure(text="Вводите числа от 1 до 16!", fg='red')
+
+            go_next_button.pack(side='left', padx=5)
+            remake_button.pack(side='left', padx=5)
+            ans_button.pack(side='left', padx=5)
     else:
         ans_label.configure(text="Вы ввели некорректные данные!", fg='red')
+
+        go_next_button.pack(side='left', padx=5)
+        remake_button.pack(side='left', padx=5)
+        ans_button.pack(side='left', padx=5)
     button_submit['state'] = 'disabled'
     entry['state'] = 'disabled'
-
-    go_next_button.pack(side='left', padx=5)
-    remake_button.pack(side='left', padx=5)
-    ans_button.pack(side='left', padx=5)
 
 
 def print_ans():
