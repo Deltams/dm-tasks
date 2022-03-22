@@ -13,11 +13,25 @@ except:
 
 n_param = tk.IntVar(value=3)
 
-attempts = 1  # кол-во попыток
-vars_count = 3  # кол-во переменных
 dict_vector = {}  # Словарь ответов для пользователя; Автоматически заполняется в all_vector
 list_vector = []
 
+def read_file():
+    s = ''
+    file = os.path.abspath(os.path.join('seve.txt',"../../..")) + '\menu\seve.txt'
+    with open(file, 'r') as f:
+        s = f.readline()
+        s = s.replace(' ', '').split(',')
+    return s
+
+def write_file(s):
+    file = os.path.abspath(os.path.join('seve.txt',"../../..")) + '\menu\seve.txt'
+    with open(file, 'w') as f:
+        ans = ''
+        for i in s:
+            ans += i + ', '
+        ans = ans[:len(ans)-2]
+        f.write(ans)
 
 def residual(vec, k, n):  # остаточная по вектору; vec - vector; k - какая остаточная; n - переменная
     ans = ""
@@ -29,7 +43,7 @@ def residual(vec, k, n):  # остаточная по вектору; vec - vect
     return ans
 
 
-def all_vector(vars_count):  # Заполнение map_vector; p - param
+def all_vector(vars_count): 
     global dict_vector
     global list_vector
     dict_vector = {}
@@ -81,7 +95,6 @@ sfp = '0'
 
 
 def mack_sfp():
-    global attempts
     global player_vec
     global sfp
 
@@ -101,12 +114,10 @@ def mack_sfp():
         if i % 4 == 0:
             ans += ' '
     player_vec = ans
-    attempts = 1
     vector_label.configure(text=player_vec)
 
 
 def send_vector():
-    global attempts
     global player_vec
     global sfp
 
@@ -122,14 +133,12 @@ def send_vector():
             go_next_button.pack(side='left', padx=5)
         else:
             error_label.configure(text='Ответ неверный!', fg='#ff4000')
-            attempts -= 1
 
             go_next_button.pack(side='left', padx=5)
             remake_button.pack(side='left', padx=5)
             correct_answer_button.pack(side='left', padx=5)
     else:
         error_label.configure(text='Ошибка ввода данных!', fg='#ff4000')
-        attempts -= 1
 
         go_next_button.pack(side='left', padx=5)
         remake_button.pack(side='left', padx=5)
@@ -199,6 +208,8 @@ def draw_menu():
     menu_bar.add_cascade(label='Настройки', menu=file_menu)
     root.configure(menu=menu_bar)
 
+def onclick(event):
+    send_vector()
 
 greet_label = tk.Label(root, text='Ваш вектор:', font=('Arial', 16, 'normal'))
 greet_label.pack()
@@ -226,5 +237,9 @@ button_help.pack(side='bottom', anchor='e')
 
 mack_sfp()
 draw_menu()
+root.bind('<Return>', onclick)
 root.mainloop()
-os.startfile('BoolGame')
+
+s = read_file()
+s[1] = '0'
+write_file(s)
