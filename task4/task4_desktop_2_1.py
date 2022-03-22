@@ -18,39 +18,43 @@ vec = 0  # вектор, который выдается пользовател�
 table_p = [
     "Константа нуля",
     "Конъюкция",
-    "Отрицание импликации от х1 к х2",
-    "Переменная X_1",
-    "Отрицание импликации от х2 к х1",
-    "Переменная X_2",
+    "Коимпликация",
+    "Переменная x1",
+    "Обратная коимпликация",
+    "Переменная x2",
     "Сложение по модулю 2(xor)",
     "Дизъюнкция",
     "Стрелка Пирса",
     "Эквивалентность",
-    "Отрицание X_2",
-    "Импликация от X_2 к X_1",
-    "Отрицание X_1",
-    "Импликация от X_1 к X_2",
+    "Отрицание x2",
+    "Обратная импликация",
+    "Отрицание x1",
+    "Импликация",
     "Штрих Шеффера",
     "Константа единицы"
 ]
+
+def read_file():
+    s = ''
+    file = os.path.abspath(os.path.join('seve.txt',"../../..")) + '\menu\seve.txt'
+    with open(file, 'r') as f:
+        s = f.readline()
+        s = s.replace(' ', '').split(',')
+    return s
+
+def write_file(s):
+    file = os.path.abspath(os.path.join('seve.txt',"../../..")) + '\menu\seve.txt'
+    with open(file, 'w') as f:
+        ans = ''
+        for i in s:
+            ans += i + ', '
+        ans = ans[:len(ans)-2]
+        f.write(ans)
 
 for i in range(16):
     tmp = bin(i)[2:]
     map_vector[i + 1] = "0" * (4 - len(tmp)) + str(tmp)
     player_vector.append([i + 1, table_p[i]])
-
-
-def answer_check(player_string):
-    if 2 < len(player_string) < 1:
-        return False
-    if 1 > int(player_string) > 16:
-        return False
-    for char in player_string:
-        if '0' <= char <= '9':
-            continue
-        return False
-    return True
-
 
 def shuffle(player_vector):  # Перемешивает вектор с данными
     tmp = len(player_vector)
@@ -87,7 +91,7 @@ def btn_func():
                 remake_button.pack(side='left', padx=5)
                 ans_button.pack(side='left', padx=5)
 
-        except IndexError:
+        except Exception:
             ans_label.configure(text="Вводите числа от 1 до 16!", fg='red')
 
             go_next_button.pack(side='left', padx=5)
@@ -133,6 +137,9 @@ def remake_button():
     remake_button.pack_forget()
     ans_button.pack_forget()
 
+def onclick(event):
+    btn_func()
+        
 
 top_frame = tk.Frame(root, pady=6)
 bottom_frame = tk.Frame(root)
@@ -159,5 +166,10 @@ remake_button = tk.Button(fr, text='Перепройти', font=('Arial', 12, 'n
 ans_button = tk.Button(fr, text='Показать ответ', font=('Arial', 12, 'normal'), bg='#d4d4d4', command=print_ans)
 fr.pack(pady=10)
 
+root.bind('<Return>', onclick)
+
 root.mainloop()
-os.startfile('BoolGame')
+
+s = read_file()
+s[0] = '0'
+write_file(s)
