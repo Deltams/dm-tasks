@@ -15,6 +15,22 @@ except:
 vec = '01111110'
 n_param = tk.IntVar(value=3)
 
+def read_file():
+    s = ''
+    file = os.path.abspath(os.path.join('seve.txt',"../../..")) + '\menu\seve.txt'
+    with open(file, 'r') as f:
+        s = f.readline()
+        s = s.replace(' ', '').split(',')
+    return s
+
+def write_file(s):
+    file = os.path.abspath(os.path.join('seve.txt',"../../..")) + '\menu\seve.txt'
+    with open(file, 'w') as f:
+        ans = ''
+        for i in s:
+            ans += i + ', '
+        ans = ans[:len(ans)-2]
+        f.write(ans)
 
 def random_vector(vars_count):
     global vec
@@ -93,14 +109,25 @@ def check_ln(vec):
 def sum_vec_pp(vec):
     ans = list(vec)
     check = False
+    t = -1
     for i in range(len(vec) - 1, -1, -1):
         if vec[i] == '1':
+            ans[i] = '0'
+            t += 1
             check = True
         if check:
             if vec[i] == '0':
                 ans[i] = '1'
                 ans[i + 1] = '0'
+                check = False
                 break
+    if check == True:
+        return vec
+    for i in range(len(vec) - 1, -1, -1):
+        if t <= 0:
+            break
+        ans[i] = '1'
+        t -= 1
     return "".join(ans)
 
 
@@ -257,6 +284,8 @@ def draw_menu():
     menu_bar.add_cascade(label='Настройки', menu=file_menu)
     root.configure(menu=menu_bar)
 
+def onclick(event):
+    send_answer()
 
 greet_label = tk.Label(root, text='Отметьте верные утверждения для функции', font=('Arial', 18, 'normal'))
 greet_label.pack(pady=5)
@@ -329,6 +358,9 @@ button_help = tk.Button(root, text='Справка', font=('Arial', 12, 'normal'
 button_help.pack(side='bottom', anchor='e')
 
 draw_menu()
-
+root.bind('<Return>', onclick)
 root.mainloop()
-os.startfile('BoolGame')
+
+s = read_file()
+s[4] = '0'
+write_file(s)
