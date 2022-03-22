@@ -11,15 +11,24 @@ try:
 except:
     pass
 
-d = {
-    'x': 'x1',
-    'y': 'x2',
-    'z': 'x3',
-    'u': 'x4',
-}
-
 n_param = tk.IntVar(value=3)
 
+def read_file():
+    s = ''
+    file = os.path.abspath(os.path.join('seve.txt',"../../..")) + '\menu\seve.txt'
+    with open(file, 'r') as f:
+        s = f.readline()
+        s = s.replace(' ', '').split(',')
+    return s
+
+def write_file(s):
+    file = os.path.abspath(os.path.join('seve.txt',"../../..")) + '\menu\seve.txt'
+    with open(file, 'w') as f:
+        ans = ''
+        for i in s:
+            ans += i + ', '
+        ans = ans[:len(ans)-2]
+        f.write(ans)
 
 def random_vector(vars_count):
     global vec
@@ -149,7 +158,9 @@ def knf_check(player_string, vec):
             stack_param -= 1
         elif player_string[i] != 'v' \
                 and player_string[i] == 'x':
-            stack_param = 1
+            stack_param += 1
+            if stack_param >= 3:
+                return False
         else:
             stack_param = 0
         if stack_param < 0:
@@ -262,6 +273,8 @@ def draw_menu():
     menu_bar.add_cascade(label='Настройки', menu=file_menu)
     root.configure(menu=menu_bar)
 
+def onclick(event):
+    send_answer()
 
 greet_label = tk.Label(root, text='Напишите КНФ для вектора:', font=('Arial', 16, 'normal'))
 greet_label.pack(pady=10)
@@ -288,6 +301,9 @@ button_help = tk.Button(root, text='Справка', font=('Arial', 12, 'normal'
 button_help.pack(side='bottom', anchor='e')
 
 draw_menu()
-
+root.bind('<Return>', onclick)
 root.mainloop()
-os.startfile('BoolGame')
+
+s = read_file()
+s[3] = '0'
+write_file(s)
