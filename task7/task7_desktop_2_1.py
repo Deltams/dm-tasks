@@ -135,6 +135,8 @@ def knf_check(player_string, vec):
             psp -= 1
             if psp < 0:
                 return False
+    if psp > 0:
+        return False
 
     player_string = player_string.replace('(', '')
     player_string = player_string.replace(')', '')
@@ -218,6 +220,8 @@ def send_answer():
         else:
             error_label.configure(text='Введеная КНФ неверная!', fg='red')
     elif len(player_string.replace(' ', '')) == 0 and vec.count('1') == len(vec):
+        error_label.configure(text='Введеная КНФ верная', fg='green')
+    elif vec.count('0') == len(vec) and len(player_string.replace(' ', '')) == 1 and int(player_string.replace(' ', '')) == 0:
         error_label.configure(text='Введеная КНФ верная', fg='green')
     else:
         error_label.configure(text='Неверный ввод!!!', fg='red')
