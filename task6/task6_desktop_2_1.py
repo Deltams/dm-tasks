@@ -145,6 +145,12 @@ def dnf_check(player_string, vec):
         if stack_param < 0:
             return False
 
+    player_string = player_string.split('v')
+    for i in range(len(player_string)):
+        for j in range(1, 10):
+            if player_string[i].count(f'x{j}') > 1:
+                return False
+    
     return True
 
 
