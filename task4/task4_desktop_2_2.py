@@ -4,7 +4,7 @@ import os
 
 root = tk.Tk()
 root.title('Задача 4')
-root.geometry('600x580+100+100')
+root.geometry('600x560+100+100')
 root.resizable(False, False)
 
 try:
@@ -34,27 +34,31 @@ table_p = [
     "Константа единицы (1)"
 ]
 
+
 def read_file():
     s = ''
-    file = os.path.abspath(os.path.join('seve.txt',"../../..")) + '\menu\seve.txt'
+    file = os.path.abspath(os.path.join('seve.txt', "../../..")) + '\menu\seve.txt'
     with open(file, 'r') as f:
         s = f.readline()
         s = s.replace(' ', '').split(',')
     return s
 
+
 def write_file(s):
-    file = os.path.abspath(os.path.join('seve.txt',"../../..")) + '\menu\seve.txt'
+    file = os.path.abspath(os.path.join('seve.txt', "../../..")) + '\menu\seve.txt'
     with open(file, 'w') as f:
         ans = ''
         for i in s:
             ans += i + ', '
-        ans = ans[:len(ans)-2]
+        ans = ans[:len(ans) - 2]
         f.write(ans)
+
 
 for i in range(16):
     tmp = bin(i)[2:]
     map_vector[i + 1] = "0" * (4 - len(tmp)) + str(tmp)
     player_vector.append([i + 1, table_p[i]])
+
 
 def shuffle(player_vector):  # Перемешивает вектор с данными
     tmp = len(player_vector)
@@ -137,33 +141,34 @@ def remake_button():
     remake_button.pack_forget()
     ans_button.pack_forget()
 
+
 def onclick(event):
     btn_func()
-        
+
 
 top_frame = tk.Frame(root, pady=6)
 bottom_frame = tk.Frame(root)
 
-greet_label = tk.Label(top_frame, text=help(), font=('Arial', 14, 'normal'), justify='left')
+greet_label = tk.Label(top_frame, text=help(), font=('Times New Roman', 16, 'normal'), justify='left')
 greet_label.pack()
 
 top_frame.pack()
 
-ans_label = tk.Label(top_frame, text='', font=('Arial', 14, 'normal'))
+ans_label = tk.Label(top_frame, text='', font=('Times New Roman', 14, 'normal'))
 ans_label.pack()
 
-entry = tk.Entry(bottom_frame, font=('Arial', 14, 'normal'))
+entry = tk.Entry(bottom_frame, font=('Roboto', 14, 'normal'))
 entry.pack(side='left', padx=10)
 
-button_submit = tk.Button(bottom_frame, text='Ответить', font=('Arial', 12, 'normal'), bg='#d4d4d4', command=btn_func)
+button_submit = tk.Button(bottom_frame, text='Ответить', font=('Roboto', 12, 'normal'), bg='#d4d4d4', command=btn_func)
 button_submit.pack(side='left')
 
 bottom_frame.pack(side='top')
 
 fr = tk.Frame(root)
-go_next_button = tk.Button(fr, text='Новое задание', font=('Arial', 12, 'normal'), bg='#d4d4d4', command=go_next)
-remake_button = tk.Button(fr, text='Перепройти', font=('Arial', 12, 'normal'), bg='#d4d4d4', command=remake_button)
-ans_button = tk.Button(fr, text='Показать ответ', font=('Arial', 12, 'normal'), bg='#d4d4d4', command=print_ans)
+go_next_button = tk.Button(fr, text='Новое задание', font=('Roboto', 12, 'normal'), bg='#d4d4d4', command=go_next)
+remake_button = tk.Button(fr, text='Пройти заново', font=('Roboto', 12, 'normal'), bg='#d4d4d4', command=remake_button)
+ans_button = tk.Button(fr, text='Показать ответ', font=('Roboto', 12, 'normal'), bg='#d4d4d4', command=print_ans)
 fr.pack(pady=10)
 
 root.bind('<Return>', onclick)
