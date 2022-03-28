@@ -4,7 +4,7 @@ import os
 
 root = tk.Tk()
 root.title('Задача 10')
-root.geometry('800x580+100+100')
+root.geometry('800x540+350+150')
 root.resizable(False, False)
 
 try:
@@ -153,7 +153,7 @@ def check_m(vec):
                 return False
     return True
 
-
+#Вывод правильного ответа
 def print_ans():
     vec = ''
     tmp = vector_label.cget('text').split()
@@ -174,9 +174,9 @@ def print_ans():
     else:
         ans += 'принадлежит следующим классам: '
     if tmp[0] == 1:
-        ans += 'T0 '
+        ans += 'T\u2080 '
     if tmp[1] == 1:
-        ans += 'T1 '
+        ans += 'T\u2081 '
     if tmp[2] == 1:
         ans += 'S '
     if tmp[3] == 1:
@@ -282,6 +282,7 @@ def draw_menu():
     file_menu.add_radiobutton(label='5 переменных', value=5, variable=n_param, command=go_next,
                               font=('Arial', 12, 'normal'))
     menu_bar.add_cascade(label='Настройки', menu=file_menu)
+    menu_bar.add_cascade(label='Справка', command=open_child_root)
     root.configure(menu=menu_bar)
 
 def onclick(event):
@@ -290,72 +291,69 @@ def onclick(event):
 greet_label = tk.Label(root, text='Отметьте верные утверждения для функции', font=('Arial', 18, 'normal'))
 greet_label.pack(pady=5)
 
-vector_label = tk.Label(root, text=random_vector(n_param.get()), font=('Arial', 17, 'normal'))
+vector_label = tk.Label(root, text=random_vector(n_param.get()), font=('Times New Roman', 17, 'normal'))
 vector_label.pack(pady=5)
 
-error_label = tk.Label(root, text='', font=('Arial', 16, 'normal'))
+error_label = tk.Label(root, text='', font=('Times New Roman', 16, 'normal'))
 error_label.pack()
 
 checkbox_frame = tk.Frame(root)
 
 fr1 = tk.Frame(checkbox_frame)
-label1 = tk.Label(fr1, text='Функция сохраняет ноль', font=('Arial', 14, 'normal'), justify='left')
+label1 = tk.Label(fr1, text='Функция сохраняет ноль', font=('Times New Roman', 14, 'normal'), justify='left')
 label1.pack(side='left')
 var1 = tk.BooleanVar()
 var1.set(0)
-c1 = tk.Checkbutton(fr1, text="T0", variable=var1, offvalue=0, onvalue=1, font=('Arial', 14, 'normal'))
+c1 = tk.Checkbutton(fr1, text="T\u2080", variable=var1, offvalue=0, onvalue=1, font=('Times New Roman', 14, 'normal'))
 c1.pack(side='left', padx=144)
 fr1.pack(anchor="w", pady=10, padx=90)
 
 fr2 = tk.Frame(checkbox_frame)
-label2 = tk.Label(fr2, text='Функция сохраняет единицу', font=('Arial', 14, 'normal'), justify='left')
+label2 = tk.Label(fr2, text='Функция сохраняет единицу', font=('Times New Roman', 14, 'normal'), justify='left')
 label2.pack(side='left')
 var2 = tk.BooleanVar()
 var2.set(0)
-c2 = tk.Checkbutton(fr2, text="T1", variable=var2, offvalue=0, onvalue=1, font=('Arial', 14, 'normal'))
+c2 = tk.Checkbutton(fr2, text="T\u2081", variable=var2, offvalue=0, onvalue=1, font=('Times New Roman', 14, 'normal'))
 c2.pack(side='left', padx=114)
 fr2.pack(anchor="w", pady=10, padx=90)
 
 fr3 = tk.Frame(checkbox_frame)
-label3 = tk.Label(fr3, text='Функция является самодвойственной', font=('Arial', 14, 'normal'))
+label3 = tk.Label(fr3, text='Функция является самодвойственной', font=('Times New Roman', 14, 'normal'))
 label3.pack(side='left')
 var3 = tk.BooleanVar()
 var3.set(0)
-c3 = tk.Checkbutton(fr3, text="S", variable=var3, offvalue=0, onvalue=1, font=('Arial', 14, 'normal'))
-c3.pack(side='left', padx=31)
+c3 = tk.Checkbutton(fr3, text="S", variable=var3, offvalue=0, onvalue=1, font=('Times New Roman', 14, 'normal'))
+c3.pack(side='left', padx=40)
 fr3.pack(anchor="w", pady=10, padx=90)
 
 fr4 = tk.Frame(checkbox_frame)
-label4 = tk.Label(fr4, text='Функция является линейной', font=('Arial', 14, 'normal'))
+label4 = tk.Label(fr4, text='Функция является линейной', font=('Times New Roman', 14, 'normal'))
 label4.pack(side='left')
 var4 = tk.BooleanVar()
 var4.set(0)
-c4 = tk.Checkbutton(fr4, text="L", variable=var4, offvalue=0, onvalue=1, font=('Arial', 14, 'normal'))
+c4 = tk.Checkbutton(fr4, text="L", variable=var4, offvalue=0, onvalue=1, font=('Times New Roman', 14, 'normal'))
 c4.pack(side='left', padx=115)
 fr4.pack(anchor="w", pady=10, padx=90)
 
 fr5 = tk.Frame(checkbox_frame)
-label5 = tk.Label(fr5, text='Функция является монотонной', font=('Arial', 14, 'normal'))
+label5 = tk.Label(fr5, text='Функция является монотонной', font=('Times New Roman', 14, 'normal'))
 label5.pack(side='left')
 var5 = tk.BooleanVar()
 var5.set(0)
-c5 = tk.Checkbutton(fr5, text="M", variable=var5, offvalue=0, onvalue=1, font=('Arial', 14, 'normal'))
+c5 = tk.Checkbutton(fr5, text="M", variable=var5, offvalue=0, onvalue=1, font=('Times New Roman', 14, 'normal'))
 c5.pack(side='left', padx=92)
 fr5.pack(anchor="w", pady=10, padx=90)
 
 checkbox_frame.pack(anchor="w", padx=30)
 
-button_submit = tk.Button(root, text='Ответить', font=('Arial', 14, 'normal'), bg='#bfbfbf', command=send_answer)
+button_submit = tk.Button(root, text='Ответить', font=('Roboto', 14, 'normal'), bg='#bfbfbf', command=send_answer)
 button_submit.pack(pady=20)
 
 but_fr = tk.Frame(root)
-new_button = tk.Button(but_fr, text='Новое задание', font=('Arial', 14, 'normal'), bg='#bfbfbf', command=go_next)
-remake_task_button = tk.Button(but_fr, text='Перепройти', font=('Arial', 14, 'normal'), bg='#bfbfbf', command=remake_task)
-ans_button = tk.Button(but_fr, text='Показать ответ', font=('Arial', 14, 'normal'), bg='#bfbfbf', command=print_ans)
+new_button = tk.Button(but_fr, text='Новое задание', font=('Roboto', 14, 'normal'), bg='#bfbfbf', command=go_next)
+remake_task_button = tk.Button(but_fr, text='Пройти заново', font=('Roboto', 14, 'normal'), bg='#bfbfbf', command=remake_task)
+ans_button = tk.Button(but_fr, text='Показать ответ', font=('Roboto', 14, 'normal'), bg='#bfbfbf', command=print_ans)
 but_fr.pack()
-
-button_help = tk.Button(root, text='Справка', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=open_child_root)
-button_help.pack(side='bottom', anchor='e')
 
 draw_menu()
 root.bind('<Return>', onclick)
