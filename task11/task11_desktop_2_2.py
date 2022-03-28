@@ -4,7 +4,7 @@ import os
 
 root = tk.Tk()
 root.title('Задача 11')
-root.geometry('800x580+100+100')
+root.geometry('800x540+350+150')
 root.resizable(False, False)
 
 try:
@@ -271,9 +271,9 @@ def print_ans():
     else:
         ans += 'принадлежит следующим классам: '
     if tmp[0] == 1:
-        ans += 'T0 '
+        ans += 'T\u2080 '
     if tmp[1] == 1:
-        ans += 'T1 '
+        ans += 'T\u2081 '
     if tmp[2] == 1:
         ans += 'S '
     if tmp[3] == 1:
@@ -341,9 +341,9 @@ def open_child_root():
     child_root.resizable(False, False)
     child_root.grab_set()
     ans = "\nЕсли вы считаете утверждение верным - нажмите на флажок\n"
-    label_ch1 = tk.Label(child_root, text=ans, font=('Arial', 12, 'normal'), justify='left').pack()
+    label_ch1 = tk.Label(child_root, text=ans, font=('Times New Roman', 14, 'normal'), justify='left').pack()
     ans = "\nЕсли верных ответов нет - оставьте флажок пустым\n"
-    label_ch2 = tk.Label(child_root, text=ans, font=('Arial', 12, 'normal'), justify='left').pack()
+    label_ch2 = tk.Label(child_root, text=ans, font=('Times New Roman', 14, 'normal'), justify='left').pack()
 
 
 def open_cb1():
@@ -431,12 +431,13 @@ def draw_menu():
     file_menu.add_radiobutton(label='5 переменных', value=5, variable=n_param, command=go_next,
                               font=('Arial', 12, 'normal'))
     menu_bar.add_cascade(label='Настройки', menu=file_menu)
+    menu_bar.add_cascade(label='Справка', command=open_child_root)
     root.configure(menu=menu_bar)
 
 def onclick(event):
     send_answer()
 
-greet_label = tk.Label(root, text='Определите является ли набор функций полным', font=('Arial', 18, 'normal'))
+greet_label = tk.Label(root, text='Определите является ли набор функций полным', font=('Times New Roman', 18, 'normal'))
 greet_label.pack()
 
 error_label = tk.Label(root, text='', font=('Arial', 16, 'normal'))
@@ -444,51 +445,51 @@ error_label.pack()
 
 # First frame
 fr1 = tk.Frame()
-vector_label1 = tk.Label(fr1, text=f'1. {random_vector(n_param.get())}', font=('Arial', 18, 'normal'))
+vector_label1 = tk.Label(fr1, text=f'1. {random_vector(n_param.get())}', font=('Times New Roman', 18, 'normal'))
 vector_label1.pack(side='left', anchor="w")
 
 fr1.pack(anchor="w", padx=150, pady=10)
 
 # Second Frame
 fr2 = tk.Frame()
-vector_label2 = tk.Label(fr2, text=f'2. {random_vector(n_param.get())}', font=('Arial', 18, 'normal'))
+vector_label2 = tk.Label(fr2, text=f'2. {random_vector(n_param.get())}', font=('Times New Roman', 18, 'normal'))
 vector_label2.pack(side='left', anchor="w")
 
 fr2.pack(anchor="w", padx=150, pady=10)
 
 # Third Frame
 fr3 = tk.Frame()
-vector_label3 = tk.Label(fr3, text=f'3. {random_vector(n_param.get())}', font=('Arial', 18, 'normal'))
+vector_label3 = tk.Label(fr3, text=f'3. {random_vector(n_param.get())}', font=('Times New Roman', 18, 'normal'))
 vector_label3.pack(side='left', anchor="w")
 
 fr3.pack(anchor="w", padx=150, pady=10)
 
 # 4XD Frame
 fr4 = tk.Frame()
-vector_label4 = tk.Label(fr4, text=f'4. {random_vector(n_param.get())}', font=('Arial', 18, 'normal'))
+vector_label4 = tk.Label(fr4, text=f'4. {random_vector(n_param.get())}', font=('Times New Roman', 18, 'normal'))
 vector_label4.pack(side='left', anchor="w")
 
 fr4_child = tk.Frame(height=36)
 
 var4_t0 = tk.BooleanVar()
 var4_t0.set(0)
-cb4_t0 = tk.Checkbutton(fr4_child, variable=var4_t0, text='T0', font=('Arial', 16, 'normal'))
+cb4_t0 = tk.Checkbutton(fr4_child, variable=var4_t0, text='T\u2080', font=('Times New Roman', 16, 'normal'))
 
 var4_t1 = tk.BooleanVar()
 var4_t1.set(0)
-cb4_t1 = tk.Checkbutton(fr4_child, variable=var4_t1, text='T1', font=('Arial', 16, 'normal'))
+cb4_t1 = tk.Checkbutton(fr4_child, variable=var4_t1, text='T\u2081', font=('Times New Roman', 16, 'normal'))
 
 var4_s = tk.BooleanVar()
 var4_s.set(0)
-cb4_s = tk.Checkbutton(fr4_child, variable=var4_s, text='S', font=('Arial', 16, 'normal'))
+cb4_s = tk.Checkbutton(fr4_child, variable=var4_s, text='S', font=('Times New Roman', 16, 'normal'))
 
 var4_ln = tk.BooleanVar()
 var4_ln.set(0)
-cb4_ln = tk.Checkbutton(fr4_child, variable=var4_ln, text='L', font=('Arial', 16, 'normal'))
+cb4_ln = tk.Checkbutton(fr4_child, variable=var4_ln, text='L', font=('Times New Roman', 16, 'normal'))
 
 var4_m = tk.BooleanVar()
 var4_m.set(0)
-cb4_m = tk.Checkbutton(fr4_child, variable=var4_m, text='M', font=('Arial', 16, 'normal'))
+cb4_m = tk.Checkbutton(fr4_child, variable=var4_m, text='M', font=('Times New Roman', 16, 'normal'))
 
 fr4.pack(anchor="w", padx=150, pady=10)
 
@@ -496,7 +497,7 @@ fr4.pack(anchor="w", padx=150, pady=10)
 fr1_1 = tk.Frame()
 var1 = tk.BooleanVar()
 var1.set(0)
-cb1 = tk.Checkbutton(fr1_1, variable=var1, text='Неполная?', command=open_cb1, font=('Arial', 16, 'normal'))
+cb1 = tk.Checkbutton(fr1_1, variable=var1, text='Неполная?', command=open_cb1, font=('Times New Roman', 16, 'normal'))
 cb1.pack()
 
 fr1_1.pack(anchor="w", padx=150, pady=10)
@@ -504,17 +505,14 @@ fr1_1.pack(anchor="w", padx=150, pady=10)
 
 fr4_child.pack(anchor="w", padx=160)
 
-button_submit = tk.Button(root, text='Ответить', font=('Arial', 14, 'normal'), bg='#bfbfbf', command=send_answer)
+button_submit = tk.Button(root, text='Ответить', font=('Roboto', 14, 'normal'), bg='#bfbfbf', command=send_answer)
 button_submit.pack(pady=10)
 
 but_fr = tk.Frame(root)
-new_button = tk.Button(but_fr, text='Новое задание', font=('Arial', 14, 'normal'), bg='#bfbfbf', command=go_next)
-remake_task_button = tk.Button(but_fr, text='Перепройти', font=('Arial', 14, 'normal'), bg='#bfbfbf', command=remake_task)
-ans_button = tk.Button(but_fr, text='Показать ответ', font=('Arial', 14, 'normal'), bg='#bfbfbf', command=print_ans)
+new_button = tk.Button(but_fr, text='Новое задание', font=('Roboto', 14, 'normal'), bg='#bfbfbf', command=go_next)
+remake_task_button = tk.Button(but_fr, text='Пройти заново', font=('Roboto', 14, 'normal'), bg='#bfbfbf', command=remake_task)
+ans_button = tk.Button(but_fr, text='Показать ответ', font=('Roboto', 14, 'normal'), bg='#bfbfbf', command=print_ans)
 but_fr.pack()
-
-button_help = tk.Button(root, text='Справка', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=open_child_root)
-button_help.pack(side='bottom', anchor='e')
 
 draw_menu()
 root.bind('<Return>', onclick)
