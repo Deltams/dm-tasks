@@ -4,7 +4,7 @@ import os
 
 root = tk.Tk()
 root.title('Задача 5')
-root.geometry('600x500+100+100')
+root.geometry('600x300+350+150')
 root.resizable(False, False)
 try:
     root.iconbitmap('icon.ico')
@@ -171,11 +171,22 @@ def remake_task():
 
 
 def show_correct_answer():
+    global sfp
     player_vec = ''
     tmp = vector_label.cget('text').split()
     for i in range(0, len(tmp)):
         player_vec += tmp[i]
-    error_label.configure(text=f'Правильный ответ - {dict_vector[player_vec][sfp]}', fg='green')
+    ans = dict_vector[player_vec][sfp]
+    ans = ans.replace('1', 'x\u2081')
+    ans = ans.replace('2', 'x\u2082')
+    ans = ans.replace('3', 'x\u2083')
+    ans = ans.replace('4', 'x\u2084')
+    ans = ans.replace('5', 'x\u2085')
+    ans = ans.replace('6', 'x\u2086')
+    ans = ans.replace('7', 'x\u2087')
+    ans = ans.replace('8', 'x\u2088')
+    ans = ans.replace('9', 'x\u2089')
+    error_label.configure(text=f'Правильный ответ - {ans}', fg='green')
     correct_answer_button.pack_forget()
 
 
@@ -188,13 +199,13 @@ def open_child_root():
     ans = "\n\nЕсли нет фиктивных или существенных переменных, то пишите 0\n"
     ans += "Пример ввода данных: \n\n"
     ans += "Выберите существенные переменные для функции: 00101001\n\n"
-    ans += "Попыток осталось: n\nВведите номер(а): 123\n\n"
+    ans += "\nВведите номер(а): 123\n\n"
     ans += "Если у вас остались вопросы, то их можно задать разработчикам:\n\n"
     ans += "https://vk.com/deltams4\n"
     ans += "https://vk.com/id212348723\n"
     ans += "https://vk.com/otza_to4ka_net\n\n"
     ans += "Приятной игры ;)\n\n\n\n"
-    label = tk.Label(child_root, text=ans, font=('Arial', 12, 'normal'), justify='left').pack()
+    label = tk.Label(child_root, text=ans, font=('Times New Roman', 12, 'normal'), justify='left').pack()
 
 
 def draw_menu():
@@ -206,34 +217,32 @@ def draw_menu():
     file_menu.add_radiobutton(label='4 переменных', value=4, variable=n_param, command=go_next)
     file_menu.add_radiobutton(label='5 переменных', value=5, variable=n_param, command=go_next)
     menu_bar.add_cascade(label='Настройки', menu=file_menu)
+    menu_bar.add_cascade(label='Справка', command=open_child_root)
     root.configure(menu=menu_bar)
 
 def onclick(event):
     send_vector()
 
-greet_label = tk.Label(root, text='Ваш вектор:', font=('Arial', 16, 'normal'))
+greet_label = tk.Label(root, text='Ваш вектор:', font=('Times New Roman', 16, 'normal'))
 greet_label.pack()
 
-vector_label = tk.Label(root, text='', font=('Arial', 16, 'normal'))
+vector_label = tk.Label(root, text='', font=('Times New Roman', 16, 'normal'))
 vector_label.pack()
 
-error_label = tk.Label(root, text='', font=('Arial', 14, 'normal'), fg='#ff4000')
+error_label = tk.Label(root, text='', font=('Times New Roman', 14, 'normal'), fg='#ff4000')
 error_label.pack()
 
-user_entry = tk.Entry(root, font=('Arial', 14, 'normal'), width=40)
+user_entry = tk.Entry(root, font=('Roboto', 14, 'normal'), width=40)
 user_entry.pack()
 
-button_submit = tk.Button(root, text='Ответить', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=send_vector)
+button_submit = tk.Button(root, text='Ответить', font=('Roboto', 12, 'normal'), bg='#bfbfbf', command=send_vector)
 button_submit.pack(pady=10)
 
 fr = tk.Frame(root)
-go_next_button = tk.Button(fr, text='Новое задание', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=go_next)
-remake_button = tk.Button(fr, text='Перепройти', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=remake_task)
-correct_answer_button = tk.Button(fr, text='Правильный ответ', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=show_correct_answer)
+go_next_button = tk.Button(fr, text='Новое задание', font=('Roboto', 12, 'normal'), bg='#bfbfbf', command=go_next)
+remake_button = tk.Button(fr, text='Пройти заново', font=('Roboto', 12, 'normal'), bg='#bfbfbf', command=remake_task)
+correct_answer_button = tk.Button(fr, text='Правильный ответ', font=('Roboto', 12, 'normal'), bg='#bfbfbf', command=show_correct_answer)
 fr.pack()
-
-button_help = tk.Button(root, text='Справка', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=open_child_root)
-button_help.pack(side='bottom', anchor='e')
 
 mack_sfp()
 draw_menu()
