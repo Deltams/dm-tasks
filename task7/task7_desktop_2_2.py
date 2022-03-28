@@ -4,7 +4,7 @@ import os
 
 root = tk.Tk()
 root.title('Задача 7')
-root.geometry('600x500+100+100')
+root.geometry('600x300+350+150')
 root.resizable(False, False)
 try:
     root.iconbitmap('icon.ico')
@@ -45,6 +45,16 @@ def random_vector(vars_count):
     return ans
 
 def string_standard2(player_string):
+    player_string = player_string.lower()
+    player_string = player_string.replace('x\u2081', 'x1')
+    player_string = player_string.replace('x\u2082', 'x2')
+    player_string = player_string.replace('x\u2083', 'x3')
+    player_string = player_string.replace('x\u2084', 'x4')
+    player_string = player_string.replace('x\u2085', 'x5')
+    player_string = player_string.replace('x\u2086', 'x6')
+    player_string = player_string.replace('x\u2087', 'x7')
+    player_string = player_string.replace('x\u2088', 'x8')
+    player_string = player_string.replace('x\u2089', 'x9')
     player_string = player_string.replace('x', 'x1')
     player_string = player_string.replace('y', 'x2')
     player_string = player_string.replace('z', 'x3')
@@ -208,6 +218,7 @@ def knf_true(player_string):
 
 
 def send_answer():
+    global ch_entry
     player_string = entry.get()
     vec = ''
     tmp = vector_label.cget('text').split()
@@ -216,16 +227,17 @@ def send_answer():
     if knf_check(string_standard2(player_string), vec):
         ans_vec = knf_true(player_string)
         if vec == ans_vec:
-            error_label.configure(text='Введеная КНФ верная', fg='green')
+            error_label.configure(text='Введенная КНФ верная', fg='green')
         else:
-            error_label.configure(text='Введеная КНФ неверная!', fg='red')
+            error_label.configure(text='Введенная КНФ неверная!', fg='red')
     elif len(player_string.replace(' ', '')) == 0 and vec.count('1') == len(vec):
-        error_label.configure(text='Введеная КНФ верная', fg='green')
+        error_label.configure(text='Введенная КНФ верная', fg='green')
     elif vec.count('0') == len(vec) and len(player_string.replace(' ', '')) == 1 and int(player_string.replace(' ', '')) == 0:
-        error_label.configure(text='Введеная КНФ верная', fg='green')
+        error_label.configure(text='Введенная КНФ верная', fg='green')
     else:
         error_label.configure(text='Неверный ввод!!!', fg='red')
 
+    ch_entry = True
     button_submit['state'] = 'disabled'
     entry['state'] = 'disabled'
     go_next_button.pack(side='left', padx=5)
@@ -233,6 +245,8 @@ def send_answer():
 
 
 def go_next():
+    global ch_entry
+    ch_entry = False
     button_submit['state'] = 'normal'
     entry['state'] = 'normal'
     entry.delete(0, 'end')
@@ -240,15 +254,19 @@ def go_next():
     remake_button.pack_forget()
     error_label.configure(text='')
     vector_label.configure(text=random_vector(n_param.get()))
+    root.after(500, lambda:check_entry())
 
 
 def remake_task():
+    global ch_entry
+    ch_entry = False
     button_submit['state'] = 'normal'
     entry['state'] = 'normal'
     entry.delete(0, 'end')
     go_next_button.pack_forget()
     remake_button.pack_forget()
     error_label.configure(text='')
+    root.after(500, lambda:check_entry())
 
 
 def open_child_root():
@@ -260,10 +278,10 @@ def open_child_root():
     ans = '\n\nПример ввода:\n\n'
     ans += '(x1 v x2)*(x3 v -x4)\n\n'
     ans += 'x1 v x2x3 v -x4\n\n'
-    ans += 'x1vx2x3v-x4\n\n'
-    ans += '(x1v-x2vx3)*(-x1vx2v-x3)&(-x1v-x2vx3)\n\n'
+    ans += 'xvyzv-u\n\n'
+    ans += '(x1v-x2vx3)*(-xvyv-z)&(-x1v-x2vx3)\n\n'
     ans += "Приятной игры ;)\n\n\n"
-    label = tk.Label(child_root, text=ans, font=('Arial', 14, 'normal'), justify='left').pack()
+    label = tk.Label(child_root, text=ans, font=('Times New Roman', 14, 'normal'), justify='left').pack()
 
 
 def draw_menu():
@@ -275,34 +293,52 @@ def draw_menu():
     file_menu.add_radiobutton(label='4 переменных', value=4, variable=n_param, command=go_next)
     file_menu.add_radiobutton(label='5 переменных', value=5, variable=n_param, command=go_next)
     menu_bar.add_cascade(label='Настройки', menu=file_menu)
+    menu_bar.add_cascade(label='Справка', command=open_child_root)
     root.configure(menu=menu_bar)
 
 def onclick(event):
     send_answer()
 
-greet_label = tk.Label(root, text='Напишите КНФ для вектора:', font=('Arial', 16, 'normal'))
+ch_entry = False
+def check_entry():
+    global ch_entry
+    if ch_entry:
+        return
+    player_string = entry.get()
+    player_string = player_string.lower()
+    player_string = player_string.replace('x1', 'x\u2081')
+    player_string = player_string.replace('x2', 'x\u2082')
+    player_string = player_string.replace('x3', 'x\u2083')
+    player_string = player_string.replace('x4', 'x\u2084')
+    player_string = player_string.replace('x5', 'x\u2085')
+    player_string = player_string.replace('x6', 'x\u2086')
+    player_string = player_string.replace('x7', 'x\u2087')
+    player_string = player_string.replace('x8', 'x\u2088')
+    player_string = player_string.replace('x9', 'x\u2089')
+    message = tk.StringVar()
+    message.set(player_string)
+    entry.configure(textvariable=message)
+    root.after(500, lambda:check_entry())
+
+greet_label = tk.Label(root, text='Напишите КНФ для вектора:', font=('Times New Roman', 16, 'normal'))
 greet_label.pack(pady=10)
 
-vector_label = tk.Label(root, text=random_vector(n_param.get()), font=('Arial', 16, 'normal'))
+vector_label = tk.Label(root, text=random_vector(n_param.get()), font=('Times New Roman', 16, 'normal'))
 vector_label.pack()
 
-error_label = tk.Label(root, text='', font=('Arial', 14, 'normal'))
+error_label = tk.Label(root, text='', font=('Times New Roman', 14, 'normal'))
 error_label.pack()
 
-entry = tk.Entry(root, font=('Arial', 14, 'normal'), width=40)
+entry = tk.Entry(root, font=('Roboto', 14, 'normal'), width=40)
 entry.pack()
 
 fr = tk.Frame()
-button_submit = tk.Button(fr, text='Ответить', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=send_answer)
+button_submit = tk.Button(fr, text='Ответить', font=('Roboto', 12, 'normal'), bg='#bfbfbf', command=send_answer)
 button_submit.pack(pady=10)
 
-go_next_button = tk.Button(fr, text='Новое задание', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=go_next)
-remake_button = tk.Button(fr, text='Перепройти', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=remake_task)
+go_next_button = tk.Button(fr, text='Новое задание', font=('Roboto', 12, 'normal'), bg='#bfbfbf', command=go_next)
+remake_button = tk.Button(fr, text='Пройти заново', font=('Roboto', 12, 'normal'), bg='#bfbfbf', command=remake_task)
 fr.pack()
-
-
-button_help = tk.Button(root, text='Справка', font=('Arial', 12, 'normal'), bg='#bfbfbf', command=open_child_root)
-button_help.pack(side='bottom', anchor='e')
 
 draw_menu()
 root.bind('<Return>', onclick)
