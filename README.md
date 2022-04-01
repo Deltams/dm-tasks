@@ -26,10 +26,10 @@ BoolGame - это обучающая игра для изучающих буле
 
 ## <a name="Team"></a> Команда
 
-![Верховых Ярослав](@porridgeX);
+[Верховых Ярослав](@porridgeX);
 
-![Селицкий Арсений](https://vk.com/otza_to4ka_net);
+[Селицкий Арсений](https://vk.com/otza_to4ka_net);
 
-![Шевчук Дмитрий](@deltams4);
+[Шевчук Дмитрий](@deltams4);
 
 ## <a name="Thanks"></a> Благодарности
